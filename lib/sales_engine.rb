@@ -1,3 +1,6 @@
+require 'pry'
+require_relative 'merchant_repository'
+
 class SalesEngine
 
   attr_accessor   :items_file,
@@ -9,13 +12,12 @@ class SalesEngine
     sales_engine = self.new
     sales_engine.items_file = list_of_file_names[:items]
     sales_engine.merchants_file = list_of_file_names[:merchants]
-    create_merchant_repository
+    sales_engine.merchants = create_merchant_repository(sales_engine.merchants_file)
     sales_engine
   end
 
-  def self.create_merchant_repository
-    # merchants = MerchantRepository.new(merchants_file)
-    "hi from merhant repo"
+  def self.create_merchant_repository(merchants_file)
+    MerchantRepository.new(merchants_file)
   end
 
   def self.all_valid?(list_of_file_names)
