@@ -3,9 +3,11 @@ require_relative "item"
 
 class ItemRepository
 
-  attr_reader   :items_list
+  attr_reader   :items_list,
+                :parent
 
-  def initialize(file_path)
+  def initialize(file_path, parent)
+    @parent = parent
     @items_list = [] 
     load_items(file_path)
   end
@@ -20,7 +22,7 @@ class ItemRepository
                                 :unit_price => one_item[:unit_price],
                                 :created_at => one_item[:created_at],
                                 :updated_at => one_item[:updated_at],
-                                :merchant_id => one_item[:merchant_id]})
+                                :merchant_id => one_item[:merchant_id]}, self)
     end
   end
 
@@ -62,6 +64,10 @@ class ItemRepository
     items_list.find_all do |item|
       item.merchant_id == merchant_id
     end
+  end
+
+  def find_merchant_by_item_id(item_id)
+    parent.find_merchant_by_item_id(item_id)
   end
 
 end

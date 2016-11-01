@@ -8,9 +8,11 @@ class Item
                 :unit_price,
                 :created_at,
                 :updated_at,
-                :merchant_id
+                :merchant_id,
+                :parent
 
-  def initialize(item_info)
+  def initialize(item_info, parent)
+    @parent = parent
     @id = item_info[:id]
     @name = item_info[:name]
     @description = item_info[:description]
@@ -22,6 +24,10 @@ class Item
 
   def unit_price_to_dollars
     unit_price.to_f
+  end
+
+  def merchant
+    parent.find_merchant_by_item_id(id)
   end
 
 end

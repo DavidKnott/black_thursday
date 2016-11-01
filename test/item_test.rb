@@ -8,7 +8,8 @@ class ItemTest < MiniTest::Test
   attr_reader   :test_item1,
                 :test_item2,
                 :test_time1,
-                :test_time2
+                :test_time2,
+                :test_item_info
 
   def setup
     @test_time1 = Time.now - 10001100
@@ -19,14 +20,15 @@ class ItemTest < MiniTest::Test
                             :created_at  => test_time1,
                             :updated_at  => test_time2,
                             :id => 5,
-                            :merchant_id => 55})
-    @test_item2 = Item.new({:name => "Potato",
+                            :merchant_id => 55}, "parent")
+    @test_item_info = {:name => "Potato",
                             :description => "Very yummy potato!",
                             :unit_price  => 3.85,
                             :created_at  => test_time2,
                             :updated_at  => test_time1,
                             :id => 26,
-                            :merchant_id => 2626})
+                            :merchant_id => 2626}
+    @test_item2 = Item.new(test_item_info, "parent")
   end
 
   def test_initializes_item
@@ -72,6 +74,14 @@ class ItemTest < MiniTest::Test
   def test_unit_price_to_dollars
     assert_equal 10.99, test_item1.unit_price_to_dollars
     assert_equal 3.85, test_item2.unit_price_to_dollars
+  end
+
+  def test_item_calls_parent
+    parent = MiniTest::Mock.new
+    item = Item.new(test_item_info, parent)
+    parent.expect(:find_merchant_by_item_id, nil, [test_item_info[:id]])
+    item.merchant
+    parent.verify
   end
 
 

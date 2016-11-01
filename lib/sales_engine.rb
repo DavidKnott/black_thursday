@@ -24,7 +24,7 @@ class SalesEngine
   end
 
   def self.create_item_repository(items_file)
-    ItemRepository.new(items_file)
+    ItemRepository.new(items_file, self)
   end
 
   def self.create_merchant_repository(merchants_file)
@@ -36,5 +36,10 @@ class SalesEngine
       File.exist?(path)
     end
   end
+
+  def self.find_merchant_by_item_id(merchant_id)
+    merchants.find_by_id(merchant_id)
+  end
+
 
 end

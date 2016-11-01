@@ -8,7 +8,7 @@ class ItemRepositoryTest < Minitest::Test
   attr_reader    :test_item_repo
 
   def setup
-    @test_item_repo = ItemRepository.new("./data/items.csv")
+    @test_item_repo = ItemRepository.new("./data/items.csv", "parent")
   end
 
   def test_initialize_item_repository
@@ -108,5 +108,13 @@ class ItemRepositoryTest < Minitest::Test
   def test_returns_empty_array_if_no_items_match_given_merchant_id
     actual = test_item_repo.find_all_by_merchant_id("12331111")
     assert_equal [], actual
+  end
+
+  def test_item_repo_calls_parent
+    parent = MiniTest::Mock.new
+    item_repo = ItemRepository.new("./data/items_one.csv", parent)
+    parent.expect(:find_merchant_by_item_id, nil, [26])
+    item_repo.find_merchant_by_item_id(26)
+    parent.verify
   end
 end
