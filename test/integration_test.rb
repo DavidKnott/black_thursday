@@ -17,8 +17,8 @@ class SalesEngineTest < Minitest::Test
     se = SalesEngine.from_csv({:items => "./data/items.csv", 
                                 :merchants => "./data/merchants.csv"})
     item = se.items.find_by_id("263405705")
-    assert_equal '', item.merchant
-    # assert_equal '', item.merchant.id
+    # assert_equal '', item.merchant
+    assert_equal '', item.merchant.id
     # assert_equal '', item.merchant.name
   end
 

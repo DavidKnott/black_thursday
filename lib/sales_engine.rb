@@ -4,42 +4,21 @@ require_relative 'item_repository'
 
 class SalesEngine
 
-  CREATE_REPOS = {:items => :create_item_repository,
-            :merchants => :create_merchant_repository}
-
-  SET_REPOS = {:items => :items=,
-            :merchants => :merchants=}
-
-  attr_accessor   :merchants,
+  attr_reader   :merchants,
                   :items
 
+  def initialize(list_of_file_names)
+    @items = ItemRepository.new(list_of_file_names[:items], self)
+    @merchants = MerchantRepository.new(list_of_file_names[:merchants])
+  end
+
   def self.from_csv(list_of_file_names)
-    return "Please Enter Valid File Names" if all_valid?(list_of_file_names)
-    sales_engine = self.new
-    list_of_file_names.keys.each do |key|
-      repository = self.send CREATE_REPOS[key], list_of_file_names[key]
-      sales_engine.send SET_REPOS[key], repository
-    end
-    sales_engine
+    self.new(list_of_file_names)
   end
 
-  def self.create_item_repository(items_file)
-    ItemRepository.new(items_file, self)
-  end
-
-  def self.create_merchant_repository(merchants_file)
-    MerchantRepository.new(merchants_file)
-  end
-
-  def self.all_valid?(list_of_file_names)
-    list_of_file_names.values.none? do |path|
-      File.exist?(path)
-    end
-  end
-
-  def self.find_merchant_by_item_id(merchant_id)
+  def find_merchant_by_item_id(merchant_id)
+    binding.pry
     merchants.find_by_id(merchant_id)
   end
-
 
 end
