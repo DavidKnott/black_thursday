@@ -76,8 +76,8 @@ class MerchantRepositoryTest < Minitest::Test
   def test_find_all_by_name_is_in_merchant_list
     assert_equal "12334165", test_one_merchant_repo.find_all_by_name("nster").first.id
     assert_equal "JUSTEmonsters", test_one_merchant_repo.find_all_by_name("TEmo").first.name
-    assert_equal "12335519", test_merchant_repo.find_all_by_name("pin").last.id
-    assert_equal "TIGHTpinch", test_merchant_repo.find_all_by_name("pin").last.name
+    assert_equal "12335602", test_merchant_repo.find_all_by_name("pin").last.id
+    assert_equal "ShopAtPinkFlamingo", test_merchant_repo.find_all_by_name("pin").last.name
   end
 
 end

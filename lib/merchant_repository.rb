@@ -35,7 +35,7 @@ class MerchantRepository
 
   def find_all_by_name(merchant_name)
     merchants_list.find_all do |merchant|
-      merchant.name.include?(merchant_name)
+      merchant.name.downcase.include?(merchant_name.downcase)
     end
   end
 
