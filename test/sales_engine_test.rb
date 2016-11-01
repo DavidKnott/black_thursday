@@ -31,4 +31,9 @@ class SalesEngineTest < Minitest::Test
     assert se.merchants    
   end
 
+  def test_itemrepository_exists
+    se = SalesEngine.from_csv({:items => "./data/items.csv", :merchants => "./data/merchants.csv"})
+    assert se.items
+  end
+
 end
