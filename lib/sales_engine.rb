@@ -28,7 +28,6 @@ class SalesEngine
   end
 
   def self.create_merchant_repository(merchants_file)
-    # binding.pry
     MerchantRepository.new(merchants_file)
   end
 
