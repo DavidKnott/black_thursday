@@ -17,8 +17,7 @@ class SalesEngine
   end
 
   def find_merchant_by_item_id(merchant_id)
-    binding.pry
-    merchants.find_by_id(merchant_id)
+    result = merchants.find_by_id(merchant_id)
   end
 
 end
