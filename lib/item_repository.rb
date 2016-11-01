@@ -24,4 +24,44 @@ class ItemRepository
     end
   end
 
+  def all
+    items_list
+  end
+
+  def find_by_id(item_id)
+    items_list.find do |item|
+      item.id == item_id
+    end
+  end
+
+  def find_by_name(item_name)
+    items_list.find do |item|
+      item.name.downcase == item_name.downcase
+    end
+  end
+
+  def find_all_with_description(segment)
+    items_list.find_all do |item|
+      item.description.downcase.include?(segment.downcase)
+    end
+  end
+
+  def find_all_by_price(price)
+    items_list.find_all do |item|
+      item.unit_price == BigDecimal.new(price, 4)
+    end
+  end
+
+  def find_all_by_price_in_range(price_range)
+    items_list.find_all do |item|
+      price_range.include?(item.unit_price)
+    end
+  end
+
+  def find_all_by_merchant_id(merchant_id)
+    items_list.find_all do |item|
+      item.merchant_id == merchant_id
+    end
+  end
+
 end
