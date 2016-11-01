@@ -24,7 +24,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_item_list_stores_id
-    assert_equal "263399263", test_item_repo.items_list[26].id
+    assert_equal 263399263, test_item_repo.items_list[26].id
   end
 
   def test_item_list_stores_description
@@ -44,7 +44,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_item_list_stores_merchant_id
-    assert_equal "12334183", test_item_repo.items_list[19].merchant_id
+    assert_equal 12334183, test_item_repo.items_list[19].merchant_id
   end
 
   def test_all_method_returns_all_items
@@ -52,11 +52,11 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_finds_item_by_id
-    assert_equal "263565894", test_item_repo.find_by_id("263565894").id
+    assert_equal 263565894, test_item_repo.find_by_id(263565894).id
   end
 
   def test_does_not_find_item_by_id_and_returns_nil
-    assert_equal nil, test_item_repo.find_by_id("263561111")
+    assert_equal nil, test_item_repo.find_by_id(263561111)
   end
 
 
@@ -101,20 +101,20 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_finds_all_items_matching_given_merchant_id
-    actual = test_item_repo.find_all_by_merchant_id("12334397")
-    assert_equal "12334397", actual.first.merchant_id
+    actual = test_item_repo.find_all_by_merchant_id(12334397)
+    assert_equal 12334397, actual.first.merchant_id
   end
 
   def test_returns_empty_array_if_no_items_match_given_merchant_id
-    actual = test_item_repo.find_all_by_merchant_id("12331111")
+    actual = test_item_repo.find_all_by_merchant_id(12331111)
     assert_equal [], actual
   end
 
   def test_item_repo_calls_parent
     parent = MiniTest::Mock.new
     item_repo = ItemRepository.new("./data/items_one.csv", parent)
-    parent.expect(:find_merchant_by_item_id, nil, [26])
-    item_repo.find_merchant_by_item_id(26)
+    parent.expect(:find_merchant_by_merchant_id, nil, [26])
+    item_repo.find_merchant_by_merchant_id(26)
     parent.verify
   end
 end

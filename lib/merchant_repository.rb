@@ -4,9 +4,11 @@ require_relative "merchant"
 
 class MerchantRepository
 
-  attr_reader   :merchants_list
+  attr_reader   :merchants_list,
+                :parent
 
-  def initialize(file_path)
+  def initialize(file_path, parent)
+    @parent = parent
     @merchants_list = [] 
     load_merchants(file_path)
   end
@@ -14,7 +16,7 @@ class MerchantRepository
   def load_merchants(file_path)
     merchants_csv = CSV.open(file_path, headers:true, header_converters: :symbol)
     merchants_csv.each do |one_merchant|
-      @merchants_list << Merchant.new({:id => one_merchant[:id].to_i, :name => one_merchant[:name]})
+      @merchants_list << Merchant.new({:id => one_merchant[:id].to_i, :name => one_merchant[:name]}, self)
     end
   end
 
@@ -38,6 +40,10 @@ class MerchantRepository
     merchants_list.find_all do |merchant|
       merchant.name.downcase.include?(merchant_name.downcase)
     end
+  end
+
+  def find_items_by_merchant_id(merchant_id)
+    parent.find_items_by_merchant_id(merchant_id)
   end
 
 end

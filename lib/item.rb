@@ -27,7 +27,7 @@ class Item
   end
 
   def merchant
-    result = parent.find_merchant_by_item_id(merchant_id)
+    result = parent.find_merchant_by_merchant_id(merchant_id)
   end
 
 end

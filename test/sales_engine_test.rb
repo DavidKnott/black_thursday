@@ -24,7 +24,6 @@ class SalesEngineTest < Minitest::Test
 
   def test_merchantrepository_exists
     se = SalesEngine.from_csv(test_config)
-    # binding.pry
     assert se.merchants    
   end
 
@@ -33,9 +32,14 @@ class SalesEngineTest < Minitest::Test
     assert se.items
   end
 
-  def test_it_calls_merchant_repo_and_finds_merchants_by_item_id
+  def test_it_calls_merchant_repo_and_finds_merchants_by_merchant_id
     se = SalesEngine.from_csv(test_config)
-    assert_equal 12334159, se.find_merchant_by_item_id(12334159).id
+    assert_equal 12334159, se.find_merchant_by_merchant_id(12334159).id
+  end
+
+   def test_it_calls_merchant_repo_and_finds_items_by_merchant_id
+    se = SalesEngine.from_csv(test_config)
+    refute_empty se.find_items_by_merchant_id(12334159)
   end
 
 end

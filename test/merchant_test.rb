@@ -9,8 +9,8 @@ class MerchantTest < MiniTest::Test
                 :test_merchant2
 
   def setup
-    @test_merchant1 = Merchant.new({:id => 5, :name => "Turing School"})
-    @test_merchant2 = Merchant.new({:id => 26, :name => "Laszlo and David Boulder School"})
+    @test_merchant1 = Merchant.new({:id => 5, :name => "Turing School"}, "parent")
+    @test_merchant2 = Merchant.new({:id => 26, :name => "Laszlo and David Boulder School"}, "parent")
   end
 
   def test_initializes_merchant
@@ -26,6 +26,14 @@ class MerchantTest < MiniTest::Test
   def test_it_stores_name
     assert_equal "Turing School", test_merchant1.name
     assert_equal "Laszlo and David Boulder School", test_merchant2.name
+  end
+
+   def test_merchant_calls_parent
+    parent = MiniTest::Mock.new
+    merchant = Merchant.new({:id => 5, :name => "Turing School"}, parent)
+    parent.expect(:find_items_by_merchant_id, nil, [5])
+    merchant.items
+    parent.verify
   end
 
 
