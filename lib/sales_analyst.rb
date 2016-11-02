@@ -20,7 +20,7 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant
-    total_items/total_merchants
+    (total_items/total_merchants).round(2)
   end
 
   def total_items
@@ -32,15 +32,14 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant_standard_deviation
-    standard_deviation(items_per_merchant_list.values, average_items_per_merchant)
+    standard_deviation(items_per_merchant_list)
   end
 
   def items_per_merchant_list
-    linked_list = {}
-    merchants_list.map do |merchant|
-      linked_list[merchant] = items_per_merchant(merchant.id)
+    item_count_list = merchants_list.map do |merchant|
+      items_per_merchant(merchant.id)
     end
-    linked_list
+    return item_count_list
   end
 
   def items_per_merchant(merchant_id)
@@ -49,7 +48,7 @@ class SalesAnalyst
   end
 
   def merchants_with_high_item_count
-    items_per_merchant_list.values.find_all do |items_for_one_merchant|
+    items_per_merchant_list.find_all do |items_for_one_merchant|
       items_for_one_merchant > average_items_per_merchant + average_items_per_merchant_standard_deviation
     end
   end
@@ -64,7 +63,7 @@ class SalesAnalyst
     merchant = sales_engine.find_merchant_by_merchant_id(merchant_id)
     item_list = merchant.items
     item_prices = collect_item_prices(item_list)
-    average(item_prices)
+    list_average(item_prices)
   end
 
   def average_average_price_per_merchant
@@ -73,7 +72,7 @@ class SalesAnalyst
       merchant_average = average_item_price_for_merchant(merchant.id)
       all_merchants << merchant_average
     end
-    avg = average(all_merchants)
+    avg = list_average(all_merchants)
     return avg
   end
 
@@ -82,8 +81,7 @@ class SalesAnalyst
     sales_engine.items.all.each do |item|
       all_items_price << item.unit_price
     end
-    all_items_average_price = average(all_items_price)
-    all_items_price_std_dev = standard_deviation(all_items_price, all_items_average_price)
+    all_items_price_std_dev = standard_deviation(all_items_price)
     golden_item_list = sales_engine.items.all.select do |item|
       item.unit_price > all_items_average_price + (2 * all_items_price_std_dev)
     end
