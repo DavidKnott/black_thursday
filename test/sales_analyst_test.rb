@@ -8,7 +8,8 @@ require 'pry'
 
 class SalesAnalystTest < MiniTest::Test
 
-  attr_reader     :sales_analyst
+  attr_reader     :sales_analyst,
+                  :sales_analyst_small
 
   def setup
     sales_engine = SalesEngine.from_csv({:merchants => "./data/merchants.csv", :items => "./data/items.csv"})
@@ -61,8 +62,29 @@ class SalesAnalystTest < MiniTest::Test
   end
 
   def test_average_average_price_per_merchant
-    test_average = sales_analyst.average_average_price_per_merchant
-    assert_equal 22.9, test_average.to_f 
+    #Unit prices from all merchants from merchants_small test file:
+    # 0.16656666666666666666666666667E2
+    # 0.15E2
+    # 0.15E3
+    # 0.2E2
+    # 0.1E3
+    # 0.35E2
+    # 0.14E2
+    # 0.12E2
+    # 0.1499E2
+    # 0.25E2
+    # => [#<BigDecimal:7fbc298182f0,'0.1665666666 6666666666 666666667E2',36(45)>,
+    #  #<BigDecimal:7fbc29813f20,'0.15E2',9(36)>,
+    #  #<BigDecimal:7fbc298139f8,'0.15E3',9(36)>,
+    #  #<BigDecimal:7fbc29813570,'0.2E2',9(36)>,
+    #  #<BigDecimal:7fbc298125d0,'0.1E3',9(36)>,
+    #  #<BigDecimal:7fbc29812198,'0.35E2',9(36)>,
+    #  #<BigDecimal:7fbc29811c20,'0.14E2',9(36)>,
+    #  #<BigDecimal:7fbc29811770,'0.12E2',9(36)>,
+    #  #<BigDecimal:7fbc298113b0,'0.1499E2',18(45)>,
+    #  #<BigDecimal:7fbc29810be0,'0.25E2',9(36)>]
+    test_average = sales_analyst_small.average_average_price_per_merchant
+    assert_equal 40.26, test_average.round(2).to_f
   end
 
 end

@@ -13,10 +13,6 @@ class SalesEngineTest < Minitest::Test
     @test_config = {:merchants => "./data/merchants.csv", :items => "./data/items.csv"}
   end
 
-  # def test_initialize_sales_engine
-  #   assert SalesEngine.new
-  # end
-
   # def test_with_non_existing_csv
   #   se = SalesEngine.from_csv({:items => "./data/magic.csv"})
   #   assert_equal "Please Enter Valid File Names", se

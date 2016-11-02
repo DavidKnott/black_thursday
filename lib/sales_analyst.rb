@@ -56,6 +56,7 @@ class SalesAnalyst
     items_per_merchant_list.values.find_all do |items_for_one_merchant|
       items_for_one_merchant > average_items_per_merchant + average_items_per_merchant_standard_deviation
     end
+  end
 
   def collect_item_prices(item_list)
     item_list.map do |item|
@@ -71,12 +72,13 @@ class SalesAnalyst
   end
 
   def average_average_price_per_merchant
-    all_merchants = BigDecimal(0)
+    all_merchants = []
     sales_engine.merchants.all.each do |merchant|
       merchant_average = average_item_price_for_merchant(merchant.id)
-      all_merchants += merchant_average
+      all_merchants << merchant_average
     end
-    all_merchants / sales_engine.merchants.all.count
+    avg = average(all_merchants)
+    return avg
   end
 
 end
