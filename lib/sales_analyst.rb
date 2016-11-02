@@ -35,7 +35,6 @@ class SalesAnalyst
     standard_deviation(items_per_merchant_list.values, average_items_per_merchant)
   end
 
-
   def items_per_merchant_list
     linked_list = {}
     merchants_list.each do |merchant|
@@ -69,12 +68,26 @@ class SalesAnalyst
   end
 
   def average_average_price_per_merchant
-    all_merchants = BigDecimal(0)
+    all_merchants = []
     sales_engine.merchants.all.each do |merchant|
       merchant_average = average_item_price_for_merchant(merchant.id)
-      all_merchants += merchant_average
+      all_merchants << merchant_average
     end
-    all_merchants / sales_engine.merchants.all.count
+    avg = average(all_merchants)
+    return avg
   end
 
+  def golden_items
+    all_items_price = []
+    sales_engine.items.all.each do |item|
+      all_items_price << item.unit_price
+    end
+    all_items_average_price = average(all_items_price)
+    all_items_price_std_dev = standard_deviation(all_items_price, all_items_average_price)
+    golden_item_list = sales_engine.items.all.select do |item|
+      item.unit_price > all_items_average_price + (2 * all_items_price_std_dev)
+    end
+    binding.pry
+    return golden_item_list
+  end
 end

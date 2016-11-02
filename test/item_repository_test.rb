@@ -32,7 +32,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_item_list_stores_unit_price
-    assert_equal 700, test_item_repo.items_list[3].unit_price.to_f
+    assert_equal 7.0, test_item_repo.items_list[3].unit_price.to_f
   end
 
   def test_item_list_stores_created_at
@@ -81,8 +81,8 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_finds_all_items_with_given_price
-    actual = test_item_repo.find_all_by_price(6000).first
-    assert_equal 6000.0, actual.unit_price.to_f
+    actual = test_item_repo.find_all_by_price(60).first
+    assert_equal 60.0, actual.unit_price.to_f
   end
 
   def test_returns_empty_array_if_no_items_match_given_price
@@ -91,8 +91,8 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_finds_all_prices_in_given_range
-    actual = test_item_repo.find_all_by_price_in_range(5000..5500)
-    assert_equal 5000.0, actual[3].unit_price.to_f
+    actual = test_item_repo.find_all_by_price_in_range(50..55)
+    assert_equal 50.0, actual[3].unit_price.to_f
   end
 
   def test_returns_empty_array_if_no_items_match_given_price_range

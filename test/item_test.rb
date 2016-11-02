@@ -16,14 +16,14 @@ class ItemTest < MiniTest::Test
     @test_time2 = Time.now - 20202020
     @test_item1 = Item.new({:name => "Pencil",
                             :description => "You can use it to write things",
-                            :unit_price  => 10.99,
+                            :unit_price  => 1099,
                             :created_at  => test_time1,
                             :updated_at  => test_time2,
                             :id => 5,
                             :merchant_id => 55}, "parent")
     @test_item_info = {:name => "Potato",
                             :description => "Very yummy potato!",
-                            :unit_price  => 3.85,
+                            :unit_price  => 385,
                             :created_at  => test_time2,
                             :updated_at  => test_time1,
                             :id => 26,
