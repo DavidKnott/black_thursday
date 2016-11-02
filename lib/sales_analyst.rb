@@ -38,7 +38,7 @@ class SalesAnalyst
 
   def items_per_merchant_list
     linked_list = {}
-    merchants_list.map do |merchant|
+    merchants_list.each do |merchant|
       linked_list[merchant] = items_per_merchant(merchant.id)
     end
     linked_list
