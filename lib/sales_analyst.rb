@@ -32,11 +32,7 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant_standard_deviation
-    sum = items_per_merchant_list.values.inject do |sum, items_for_one_merchant|
-      sum + (items_for_one_merchant - average_items_per_merchant)**2
-    end
-    sum = sum / merchants_list.length-1
-    Math.sqrt(sum)
+    standard_deviation(items_per_merchant_list.values, average_items_per_merchant)
   end
 
 
@@ -57,6 +53,7 @@ class SalesAnalyst
     items_per_merchant_list.values.find_all do |items_for_one_merchant|
       items_for_one_merchant > average_items_per_merchant + average_items_per_merchant_standard_deviation
     end
+  end
 
   def collect_item_prices(item_list)
     item_list.map do |item|

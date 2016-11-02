@@ -45,13 +45,12 @@ class SalesAnalystTest < MiniTest::Test
   end
 
   def test_it_finds_average_items_per_merchant_standard_deviation
-    skip
     assert_equal 3.099372766779748, sales_analyst.average_items_per_merchant_standard_deviation
   end
 
 
   def test_it_lists_merchants_with_item_count_over_one_standard_devation
-    skip
+    
     assert_equal 65, sales_analyst.merchants_with_high_item_count.count
   end
 
@@ -62,21 +61,9 @@ class SalesAnalystTest < MiniTest::Test
   end
 
   def test_average_average_price_per_merchant
+  skip
     test_average = sales_analyst.average_average_price_per_merchant
     assert_equal 22.9, test_average.to_f 
   end
-
-
-  def test_average_item_price_for_merchant
-    #Unit prices for this merchant as from CSV file: 2390, 2390, 2390, 2390, 1890.
-    test_average = sales_analyst.average_item_price_for_merchant(12334315)
-    assert_equal 22.9, test_average.to_f 
-  end
-
-  def test_average_average_price_per_merchant
-    test_average = sales_analyst.average_average_price_per_merchant
-    assert_equal 22.9, test_average.to_f 
-  end
-
 
 end
