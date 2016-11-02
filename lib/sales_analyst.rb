@@ -1,6 +1,7 @@
 require 'pry'
 require_relative 'calculator'
 
+
 class SalesAnalyst
   include Calculator
 
@@ -31,13 +32,8 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant_standard_deviation
-    sum = items_per_merchant_list.values.inject do |sum, items_for_one_merchant|
-      sum + (items_for_one_merchant - average_items_per_merchant)**2
-    end
-    sum = sum / merchants_list.length-1
-    Math.sqrt(sum)
+    standard_deviation(items_per_merchant_list.values, average_items_per_merchant)
   end
-
 
   def items_per_merchant_list
     linked_list = {}
@@ -81,4 +77,17 @@ class SalesAnalyst
     return avg
   end
 
+  def golden_items
+    all_items_price = []
+    sales_engine.items.all.each do |item|
+      all_items_price << item.unit_price
+    end
+    all_items_average_price = average(all_items_price)
+    all_items_price_std_dev = standard_deviation(all_items_price, all_items_average_price)
+    golden_item_list = sales_engine.items.all.select do |item|
+      item.unit_price > all_items_average_price + (2 * all_items_price_std_dev)
+    end
+    binding.pry
+    return golden_item_list
+  end
 end
