@@ -87,7 +87,6 @@ class SalesAnalyst
     golden_item_list = sales_engine.items.all.select do |item|
       item.unit_price > all_items_average_price + (2 * all_items_price_std_dev)
     end
-    binding.pry
     return golden_item_list
   end
 end
