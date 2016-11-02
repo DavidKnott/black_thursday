@@ -28,7 +28,7 @@ class MerchantTest < MiniTest::Test
     assert_equal "Laszlo and David Boulder School", test_merchant2.name
   end
 
-   def test_merchant_calls_parent
+  def test_merchant_calls_parent_to_find_items
     parent = MiniTest::Mock.new
     merchant = Merchant.new({:id => 5, :name => "Turing School"}, parent)
     parent.expect(:find_items_by_merchant_id, nil, [5])
@@ -36,5 +36,12 @@ class MerchantTest < MiniTest::Test
     parent.verify
   end
 
+  def test_merchant_calls_parent_to_find_invoices
+    parent = MiniTest::Mock.new
+    merchant = Merchant.new({:id => 5, :name => "Turing School"}, parent)
+    parent.expect(:find_invoices_by_merchant_id, nil, [5])
+    merchant.invoices
+    parent.verify
+  end
 
 end

@@ -36,11 +36,11 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_item_list_stores_created_at
-    assert_equal "2016-01-11 13:32:00 UTC", test_item_repo.items_list[56].created_at
+    assert_equal Time.parse("2016-01-11 13:32:00 UTC"), test_item_repo.items_list[56].created_at
   end
 
   def test_item_list_stores_updated_at
-    assert_equal "1972-09-10 20:13:31 UTC", test_item_repo.items_list[49].updated_at
+    assert_equal Time.parse("1972-09-10 20:13:31 UTC"), test_item_repo.items_list[49].updated_at
   end
 
   def test_item_list_stores_merchant_id

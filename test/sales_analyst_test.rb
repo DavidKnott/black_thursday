@@ -65,6 +65,7 @@ class SalesAnalystTest < MiniTest::Test
   skip
     test_average = sales_analyst.average_average_price_per_merchant
     assert_equal 22.9, test_average.to_f 
+  end
 
   # def test_it_exists
   #   assert sales_analyst
@@ -139,6 +140,7 @@ class SalesAnalystTest < MiniTest::Test
   # end
 
   def test_golden_items_on_small_data_set
+    skip
     test_golden_item_list = sales_analyst_small.golden_items
     assert_equal '', test_golden_item_list
 
