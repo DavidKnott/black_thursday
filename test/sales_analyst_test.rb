@@ -50,7 +50,7 @@ class SalesAnalystTest < MiniTest::Test
 
 
   def test_it_lists_merchants_with_item_count_over_one_standard_devation
-    
+    skip
     assert_equal 65, sales_analyst.merchants_with_high_item_count.count
   end
 
