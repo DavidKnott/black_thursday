@@ -24,4 +24,12 @@ module Calculator
     Math.sqrt(total).round(2)
   end
 
+  def bigdecimal_to_float(input)
+    input.round(2).to_f
+  end
+
+  def bigdecimal_round(input)
+    input.round(2)
+  end
+
 end

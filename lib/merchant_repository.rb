@@ -7,6 +7,10 @@ class MerchantRepository
   attr_reader   :merchants_list,
                 :parent
 
+  def inspect
+    "#<#{self.class} #{@merchants_list.size} rows>"
+  end
+
   def initialize(file_path, parent)
     @parent = parent
     @merchants_list = [] 
@@ -32,7 +36,7 @@ class MerchantRepository
 
   def find_by_name(merchant_name)
     merchants_list.find do |merchant|
-      merchant.name == merchant_name
+      merchant.name.downcase == merchant_name.downcase
     end
   end
 

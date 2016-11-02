@@ -67,4 +67,18 @@ class CalculatorTest < Minitest::Test
     assert_equal Float, test_std_dev.class
   end
 
+  def test_bigdecimal_to_float
+    test_output = bigdecimal_to_float(BigDecimal("10.8723"))
+    test_expected_output = 10.87
+    assert_equal test_expected_output, test_output
+    assert_equal Float, test_output.class
+  end
+
+  def test_bigdecimal_round
+    test_output = bigdecimal_round(BigDecimal("10.8723"))
+    test_expected_output = BigDecimal("10.87").round(2)
+    assert_equal test_expected_output, test_output
+    assert_equal BigDecimal, test_output.class
+  end
+
 end

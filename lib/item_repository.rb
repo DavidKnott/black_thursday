@@ -6,6 +6,10 @@ class ItemRepository
   attr_reader   :items_list,
                 :parent
 
+  def inspect
+    "#<#{self.class} #{@items_list.size} rows>"
+  end
+
   def initialize(file_path, parent)
     @parent = parent
     @items_list = [] 
