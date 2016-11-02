@@ -80,11 +80,19 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal "ShopAtPinkFlamingo", test_merchant_repo.find_all_by_name("pin").last.name
   end
 
-  def test_merchant_calls_parent
+  def test_merchant_calls_parent_to_find_items
     parent = MiniTest::Mock.new
     merchant_repo = MerchantRepository.new("./data/merchants_one.csv", parent)
     parent.expect(:find_items_by_merchant_id, nil, [5])
     merchant_repo.find_items_by_merchant_id(5)
+    parent.verify
+  end
+
+  def test_merchant_calls_parent_to_find_invoices
+    parent = MiniTest::Mock.new
+    merchant_repo = MerchantRepository.new("./data/merchants_one.csv", parent)
+    parent.expect(:find_invoices_by_merchant_id, nil, [5])
+    merchant_repo.find_invoices_by_merchant_id(5)
     parent.verify
   end
 

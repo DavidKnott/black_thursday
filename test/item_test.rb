@@ -12,8 +12,8 @@ class ItemTest < MiniTest::Test
                 :test_item_info
 
   def setup
-    @test_time1 = Time.now - 10001100
-    @test_time2 = Time.now - 20202020
+    @test_time1 = "2016-01-11 11:44:13 UTC"
+    @test_time2 = "1990-10-06 04:14:15 UTC"
     @test_item1 = Item.new({:name => "Pencil",
                             :description => "You can use it to write things",
                             :unit_price  => 1099,
@@ -52,13 +52,13 @@ class ItemTest < MiniTest::Test
   end
 
   def test_it_stores_created_at
-    assert_equal test_time1, test_item1.created_at
-    assert_equal test_time2, test_item2.created_at
+    assert_equal Time.parse(test_time1), test_item1.created_at
+    assert_equal Time.parse(test_time2), test_item2.created_at
   end
 
   def test_it_stores_updated_at
-    assert_equal test_time2, test_item1.updated_at
-    assert_equal test_time1, test_item2.updated_at
+    assert_equal Time.parse(test_time2), test_item1.updated_at
+    assert_equal Time.parse(test_time1), test_item2.updated_at
   end
 
   def test_it_stores_merchant_id

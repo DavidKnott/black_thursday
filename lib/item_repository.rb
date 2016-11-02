@@ -1,5 +1,7 @@
 require "csv"
+require 'time'
 require_relative "item"
+
 
 class ItemRepository
 
@@ -20,13 +22,7 @@ class ItemRepository
   def load_items(file_path)
     items_csv = CSV.open(file_path, headers:true, header_converters: :symbol)
     items_csv.each do |one_item|
-      @items_list << Item.new({:id => one_item[:id],
-                                :name => one_item[:name],
-                                :description => one_item[:description],
-                                :unit_price => one_item[:unit_price],
-                                :created_at => one_item[:created_at],
-                                :updated_at => one_item[:updated_at],
-                                :merchant_id => one_item[:merchant_id]}, self)
+      @items_list << Item.new(one_item, self)
     end
   end
 
@@ -71,7 +67,10 @@ class ItemRepository
   end
 
   def find_merchant_by_merchant_id(merchant_id)
-    result = parent.find_merchant_by_merchant_id(merchant_id)
+    parent.find_merchant_by_merchant_id(merchant_id)
+  end
+
+  def inspect
   end
 
 end

@@ -36,10 +36,9 @@ class SalesAnalyst
   end
 
   def items_per_merchant_list
-    item_count_list = merchants_list.map do |merchant|
+    merchants_list.map do |merchant|
       items_per_merchant(merchant.id)
     end
-    return item_count_list
   end
 
   def items_per_merchant(merchant_id)

@@ -20,7 +20,7 @@ class MerchantRepository
   def load_merchants(file_path)
     merchants_csv = CSV.open(file_path, headers:true, header_converters: :symbol)
     merchants_csv.each do |one_merchant|
-      @merchants_list << Merchant.new({:id => one_merchant[:id].to_i, :name => one_merchant[:name]}, self)
+      @merchants_list << Merchant.new(one_merchant, self)
     end
   end
 
@@ -49,5 +49,12 @@ class MerchantRepository
   def find_items_by_merchant_id(merchant_id)
     parent.find_items_by_merchant_id(merchant_id)
   end
+  
+  def find_invoices_by_merchant_id(merchant_id)
+    parent.find_invoices_by_merchant_id(merchant_id)
+  end
 
+  def inspect
+  end
+  
 end
