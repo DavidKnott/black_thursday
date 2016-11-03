@@ -9,7 +9,12 @@ class SalesEngineTest < Minitest::Test
   attr_reader   :test_config
 
   def setup
-    @test_config = {:merchants => "./data/merchants.csv", :items => "./data/items.csv", :invoices => "./data/invoices.csv"}
+    @test_config = {:merchants => "./data/merchants.csv",
+                    :items => "./data/items.csv",
+                    :invoices => "./data/invoices.csv",
+                    :invoice_items => "./data/invoice_items.csv",
+                    :transactions => "./data/transactions.csv",
+                    :customers => "./data/customers.csv"}
   end
 
   def test_with_non_existing_csv
@@ -28,14 +33,19 @@ class SalesEngineTest < Minitest::Test
     assert se.items
   end
 
-  def test_merchant_repository_exists
+  def test_invoice_items_repository_exists
     se = SalesEngine.from_csv(test_config)
-    assert se.items
+    assert se.invoice_items
   end
 
-  def test_invoice_repository_exists
+  def test_transactions_repository_exists
     se = SalesEngine.from_csv(test_config)
-    assert se.invoices
+    assert se.transactions
+  end
+
+  def test_customers_repository_exists
+    se = SalesEngine.from_csv(test_config)
+    assert se.customers
   end
 
   def test_it_calls_merchant_repo_and_finds_merchants_by_merchant_id
