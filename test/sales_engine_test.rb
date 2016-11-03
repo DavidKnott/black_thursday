@@ -60,7 +60,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_calls_items_repo_and_finds_items_by_invoice_id
-    assert_equal 27, se.find_invoice_items_by_invoice_id(6).first.id
+    assert_equal 27, se.find_invoice_items(6).first.id
   end
 
   def test_it_calls_transaction_repo_and_finds_transactions_by_invoice_id

@@ -45,7 +45,6 @@ attr_reader     :id,
   end
 
   def is_paid_in_full?
-    #binding.pry
     transactions.any? do |transaction|
       transaction.result == "success"
     end
@@ -53,8 +52,8 @@ attr_reader     :id,
 
   def total
     return nil unless is_paid_in_full?
-    items.reduce(0) do |invoice_total, item|
-      invoice_total += item.unit_price_to_dollars
+    invoice_items.reduce(0) do |invoice_total, invoice_item|
+      invoice_total += invoice_item.quantity * invoice_item.unit_price
       invoice_total
     end
   end
