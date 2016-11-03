@@ -8,7 +8,6 @@ class MerchantRepository
                 :parent
 
   def inspect
-    "#<#{self.class} #{@merchants_list.size} rows>"
   end
 
   def initialize(file_path, parent)
@@ -26,6 +25,10 @@ class MerchantRepository
 
   def all
     merchants_list
+  end
+
+  def count_all
+    merchants_list.count
   end
 
   def find_by_id(merchant_id)
@@ -54,7 +57,6 @@ class MerchantRepository
     parent.find_invoices_by_merchant_id(merchant_id)
   end
 
-  def inspect
-  end
+
   
 end

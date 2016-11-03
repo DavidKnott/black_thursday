@@ -12,10 +12,12 @@ class SalesAnalystTest < MiniTest::Test
                   :sales_analyst_small
 
   def setup
-    sales_engine = SalesEngine.from_csv({:merchants => "./data/merchants.csv", :items => "./data/items.csv"})
+    test_file_list = {:merchants => "./data/merchants.csv", :items => "./data/items.csv", :invoices => "./data/invoices.csv"}
+    sales_engine = SalesEngine.from_csv(test_file_list)
     @sales_analyst = SalesAnalyst.new(sales_engine)
 
-    sales_engine_small = SalesEngine.from_csv({:merchants => "./data/merchants_small.csv", :items => "./data/items.csv"})
+    test_small_file_list = {:merchants => "./data/merchants_small.csv", :items => "./data/items.csv", :invoices => "./data/invoices.csv"}
+    sales_engine_small = SalesEngine.from_csv(test_small_file_list)
     @sales_analyst_small = SalesAnalyst.new(sales_engine_small)    
   end
 
@@ -51,7 +53,7 @@ class SalesAnalystTest < MiniTest::Test
   end
 
   def test_it_lists_merchants_with_item_count_over_one_standard_devation
-    skip
+    # skip
     assert_equal 52, sales_analyst.merchants_with_high_item_count.count
   end
 
@@ -94,10 +96,60 @@ class SalesAnalystTest < MiniTest::Test
   end
 
   def test_golden_items_on_small_data_set
-    skip
     test_golden_item_list = sales_analyst_small.golden_items
-    assert_equal '', test_golden_item_list
+    assert_equal Item, test_golden_item_list.first.class
+    assert_equal 263410685, test_golden_item_list.first.id
+    assert_equal "Test listing", test_golden_item_list.first.name
+  end
 
+  def test_average_invoices_per_merchant
+    test_average_invoice = sales_analyst.average_invoices_per_merchant
+    test_average_invoice_expected = 10.49
+    assert_equal test_average_invoice_expected, test_average_invoice
+  end
+
+  def test_average_invoices_per_merchant_standard_deviation
+    test_average_invoice = sales_analyst.average_invoices_per_merchant_standard_deviation
+    test_average_invoice_expected = 3.29
+    assert_equal test_average_invoice_expected, test_average_invoice
+  end
+
+  def test_top_merchants_by_invoice_count
+    test_top_merchants = sales_analyst.top_merchants_by_invoice_count
+    test_top_merchants_expected_id = 12334141
+    test_top_merchants_expected_name = "jejum"
+    assert_equal Array, test_top_merchants.class
+    assert_equal test_top_merchants_expected_id, test_top_merchants.first.id
+    assert_equal test_top_merchants_expected_name, test_top_merchants.first.name
+  end
+
+  def test_bottom_merchants_by_invoice_count
+    test_bottom_merchants = sales_analyst.bottom_merchants_by_invoice_count
+    test_bottom_merchants_expected_id = 12334235
+    test_bottom_merchants_expected_name = "WellnessNeelsen"
+    assert_equal Array, test_bottom_merchants.class
+    assert_equal test_bottom_merchants_expected_id, test_bottom_merchants.first.id
+    assert_equal test_bottom_merchants_expected_name, test_bottom_merchants.first.name
+  end
+
+  def test_top_days_by_invoice_count
+    test_top_days = sales_analyst.top_days_by_invoice_count
+    test_top_days_expected = ["Wednesday"]
+    test_top_days_expected_day = "Wednesday"
+    assert_equal Array, test_top_days.class
+    assert_equal test_top_days_expected, test_top_days
+    assert_equal test_top_days_expected_day, test_top_days.first    
+  end
+
+  def test_invoice_status
+    test_invoice_status_pending = sales_analyst.invoice_status(:pending)
+    test_invoice_status_shipped = sales_analyst.invoice_status(:shipped)
+    test_invoice_status_returned = sales_analyst.invoice_status(:returned)
+    assert_equal Float, test_invoice_status_pending.class
+    assert_equal 29.55, test_invoice_status_pending
+    assert_equal 56.95, test_invoice_status_shipped
+    assert_equal 13.5, test_invoice_status_returned
+    assert_equal 100, test_invoice_status_pending + test_invoice_status_returned + test_invoice_status_shipped
   end
 
 end

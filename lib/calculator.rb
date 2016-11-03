@@ -3,6 +3,8 @@ require 'bigdecimal'
 
 module Calculator
 
+  WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
   def average(total, count)
     BigDecimal(BigDecimal(total) / BigDecimal(count))
   end
@@ -30,6 +32,15 @@ module Calculator
 
   def bigdecimal_round(input)
     input.round(2)
+  end
+
+  def weekday(input)
+    WEEKDAYS[input]
+  end
+
+  def percentage(fraction, total)
+    result = BigDecimal(fraction) / BigDecimal(total) * 100
+    bigdecimal_to_float(result)
   end
 
 end

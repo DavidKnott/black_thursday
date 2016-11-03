@@ -81,4 +81,17 @@ class CalculatorTest < Minitest::Test
     assert_equal BigDecimal, test_output.class
   end
 
+  def test_weekday
+    assert_equal "Sunday", weekday(0)
+    assert_equal "Friday", weekday(5)
+    refute_equal "Tuesday", weekday(4)
+  end
+
+  def test_percentage
+    assert_equal 20, percentage(5, 25)
+    assert_equal 68.52, percentage(37, 54)
+    assert_equal 0, percentage(0, 124)
+    assert_equal 71.11, percentage(32, 45)
+  end
+
 end

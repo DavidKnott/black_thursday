@@ -9,7 +9,6 @@ class ItemRepository
                 :parent
 
   def inspect
-    "#<#{self.class} #{@items_list.size} rows>"
   end
 
   def initialize(file_path, parent)
@@ -17,7 +16,6 @@ class ItemRepository
     @items_list = [] 
     load_items(file_path)
   end
-
 
   def load_items(file_path)
     items_csv = CSV.open(file_path, headers:true, header_converters: :symbol)
@@ -28,6 +26,10 @@ class ItemRepository
 
   def all
     items_list
+  end
+
+  def count_all
+    items_list.count
   end
 
   def find_by_id(item_id)
@@ -68,9 +70,6 @@ class ItemRepository
 
   def find_merchant_by_merchant_id(merchant_id)
     parent.find_merchant_by_merchant_id(merchant_id)
-  end
-
-  def inspect
   end
 
 end

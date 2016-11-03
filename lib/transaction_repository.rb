@@ -7,6 +7,9 @@ class TransactionRepository
   attr_reader     :transactions_list,
                   :parent
 
+  def inspect
+  end
+
   def initialize(file_path, parent)
     @parent = parent
     @transactions_list = [] 
@@ -42,7 +45,7 @@ class TransactionRepository
     end
   end
 
-   def find_all_by_result(result)
+  def find_all_by_result(result)
     transactions_list.find_all do |transaction|
       transaction.result == result
     end

@@ -16,14 +16,14 @@ class IntegrationTest < Minitest::Test
     assert_equal 12334671, item.merchant.id
   end
 
-  def test_it_can_find_items_from_merchant
+  def test_it_can_find_items_from_merchant_case1
       se = SalesEngine.from_csv({:items => "./data/items.csv", 
                                 :merchants => "./data/merchants.csv"})
     merchant = se.merchants.find_by_id(12334671)
     assert_equal 263405705, merchant.items.first.id
   end
 
-  def test_it_can_find_items_from_merchant
+  def test_it_can_find_items_from_merchant_case2
       se = SalesEngine.from_csv({:items => "./data/items.csv", 
                                 :merchants => "./data/merchants.csv",
                                 :invoices => "./data/invoices.csv"})

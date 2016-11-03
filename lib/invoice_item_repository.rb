@@ -6,6 +6,9 @@ class InvoiceItemRepository
   attr_reader     :invoice_items_list,
                   :parent
 
+  def inspect
+  end
+
   def initialize(file_path, parent)
     @parent = parent
     @invoice_items_list = [] 

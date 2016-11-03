@@ -9,8 +9,10 @@ class MerchantTest < MiniTest::Test
                 :test_merchant2
 
   def setup
-    @test_merchant1 = Merchant.new({:id => 5, :name => "Turing School"}, "parent")
-    @test_merchant2 = Merchant.new({:id => 26, :name => "Laszlo and David Boulder School"}, "parent")
+    test_data1 = {:id => 5, :name => "Turing School"}
+    test_data2 = {:id => 26, :name => "Laszlo and David Boulder School"}
+    @test_merchant1 = Merchant.new(test_data1, "parent")
+    @test_merchant2 = Merchant.new(test_data2, "parent")
   end
 
   def test_initializes_merchant

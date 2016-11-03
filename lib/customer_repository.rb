@@ -7,6 +7,9 @@ class CustomerRepository
   attr_reader     :customers_list,
                   :parent
 
+  def inspect
+  end
+
   def initialize(file_path, parent)
     @parent = parent
     @customers_list = [] 
@@ -20,11 +23,6 @@ class CustomerRepository
     end
   end
 
-#   all - returns an array of all known Customers instances
-# find_by_id - returns either nil or an instance of Customer with a matching ID
-# find_all_by_first_name - returns either [] or one or more matches which have a first name matching the substring fragment supplied
-# find_all_by_last_name - returns either [] or one or more matches which have a last name matching the substring fragment supplied
-
   def all
     customers_list
   end
@@ -35,17 +33,16 @@ class CustomerRepository
     end
   end
 
-  def find_all_by_first_name(first_name)
+  def find_all_by_first_name(input)
     customers_list.find_all do |customer|
-      customer.first_name == first_name
+      customer.first_name.downcase.include?(input.downcase)
     end
   end
 
-  def find_all_by_last_name(last_name)
+  def find_all_by_last_name(input)
     customers_list.find_all do |customer|
-      customer.last_name == last_name
+      customer.last_name.downcase.include?(input.downcase)
     end
   end
-
 
 end
