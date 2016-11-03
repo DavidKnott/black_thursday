@@ -23,7 +23,7 @@ attr_reader     :id,
   end
 
   def merchant
-    parent.find_merchant_by_merchant_id(merchant_id)
+    parent.find_merchant(merchant_id)
   end
 
   def items
@@ -37,11 +37,11 @@ attr_reader     :id,
   end
 
   def transactions
-    parent.find_transactions_by_invoice_id(id)
+    parent.find_transactions(id)
   end
 
   def customer
-    parent.find_customer_by_customer_id(customer_id)
+    parent.find_customer(customer_id)
   end
 
   def is_paid_in_full?

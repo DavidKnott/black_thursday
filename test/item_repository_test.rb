@@ -93,7 +93,7 @@ class ItemRepositoryTest < Minitest::Test
   def test_item_repo_calls_parent
     parent = MiniTest::Mock.new
     item_repo = ItemRepository.new("./data/items_one.csv", parent)
-    parent.expect(:find_merchant_by_merchant_id, nil, [26])
+    parent.expect(:find_merchant, nil, [26])
     item_repo.find_merchant_by_merchant_id(26)
     parent.verify
   end

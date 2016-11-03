@@ -80,7 +80,7 @@ class ItemTest < MiniTest::Test
   def test_item_calls_parent
     parent = MiniTest::Mock.new
     item = Item.new(test_item_info, parent)
-    parent.expect(:find_merchant_by_merchant_id, nil, [test_item_info[:merchant_id]])
+    parent.expect(:find_merchant, nil, [test_item_info[:merchant_id]])
     item.merchant
     parent.verify
   end

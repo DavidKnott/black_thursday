@@ -33,7 +33,7 @@ class MerchantTest < MiniTest::Test
   def test_merchant_calls_parent_to_find_items
     parent = MiniTest::Mock.new
     merchant = Merchant.new({:id => 5, :name => "Turing School"}, parent)
-    parent.expect(:find_items_by_merchant_id, nil, [5])
+    parent.expect(:find_items, nil, [5])
     merchant.items
     parent.verify
   end
@@ -41,19 +41,9 @@ class MerchantTest < MiniTest::Test
   def test_merchant_calls_parent_to_find_invoices
     parent = MiniTest::Mock.new
     merchant = Merchant.new({:id => 5, :name => "Turing School"}, parent)
-    parent.expect(:find_invoices_by_merchant_id, nil, [5])
+    parent.expect(:find_invoices, nil, [5])
     merchant.invoices
     parent.verify
   end
-
-  #Other than created specific attr_accessor instance variables within Merchant class,
-  #could not mock parent calls  
-  # def test_merchant_calls_parent_to_find_customer
-  #   parent = MiniTest::Mock.new
-  #   merchant = Merchant.new({:id => 5, :name => "Turing School"}, parent)
-  #   parent.expect(:find_customer, nil, [5])
-  #   merchant.customers
-  #   parent.verify
-  # end
 
 end
