@@ -64,15 +64,21 @@ class SalesEngine
   end
 
   def find_items_by_merchant_id(merchant_id)
+    #This has a duplicate below
     items.find_all_by_merchant_id(merchant_id)
   end
+  # def find_items_by_merchant_id(merchant_id)
+  #   This is DUPLICATE!!!
+  #   items.find_all_by_merchant_id(merchant_id)
+  # end
 
   def find_invoices_by_merchant_id(merchant_id)
     invoices.find_all_by_merchant_id(merchant_id)
   end
 
-  def find_items_by_merchant_id(merchant_id)
-    items.find_all_by_merchant_id(merchant_id)
+
+  def find_invoice_items(invoice_id)
+    invoice_items.find_all_by_invoice_id(invoice_id)
   end
 
   def find_transactions_by_invoice_id(invoice_id)
@@ -95,6 +101,10 @@ class SalesEngine
 
   def find_invoices_for_customer(customer_id)
     invoices.find_all_by_customer_id(customer_id)
+  end
+
+  def find_item(item_id)
+    items.find_by_id(item_id)
   end
 
   def merchants_list
