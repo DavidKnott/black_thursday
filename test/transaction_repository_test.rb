@@ -21,32 +21,8 @@ class TransactionRepositoryTest < Minitest::Test
     refute_empty transactions_list
   end
 
-  def test_transaction_list_stores_id
-    assert_equal 14, transactions_list[13].id
-  end
-
-  def test_item_list_stores_invoice_id
-    assert_equal 3560, transactions_list[13].invoice_id
-  end
-
-  def test_item_list_stores_credit_card_number
-    assert_equal 4035885351912165, transactions_list[13].credit_card_number
-  end
-
-  def test_item_list_stores_credit_card_number_expiration_date
-    assert_equal "1020", transactions_list[13].credit_card_expiration_date
-  end
-
-  def test_item_list_stores_result
-    assert_equal "failed", transactions_list[13].result
-  end
-
-  def test_item_list_stores_created_at
-    assert_equal Time.parse("2012-02-26 20:56:57 UTC"), transactions_list[13].created_at
-  end
-
-  def test_item_list_stores_updated_at
-    assert_equal Time.parse("2012-02-26 20:56:57 UTC"), transactions_list[13].updated_at
+  def test_transaction_list_stores_transactions
+    assert_equal Transaction, transactions_list.first.class
   end
 
   def test_all_method_returns_all_transactions

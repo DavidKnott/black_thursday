@@ -21,24 +21,8 @@ class InvoiceItemRepositoryTest < Minitest::Test
     refute_empty invoice_items_list
   end
 
-  def test_item_list_stores_id
-    assert_equal 14, invoice_items_list[13].id
-  end
-
-  def test_item_list_stores_item_id
-    assert_equal 263529264, invoice_items_list[13].item_id
-  end
-
-  def test_item_list_stores_invoice_id
-    assert_equal 3, invoice_items_list[13].invoice_id
-  end
-
-  def test_item_list_stores_quantity
-    assert_equal 7, invoice_items_list[13].quantity
-  end
-
-  def test_item_list_stores_unit_price
-    assert_equal 42.64, invoice_items_list[13].unit_price.to_f
+  def test_invoice_item_list_stores_invoice_items
+    assert_equal InvoiceItem, invoice_items_list.first.class
   end
 
   def test_item_list_stores_created_at
