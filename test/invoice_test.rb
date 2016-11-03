@@ -47,12 +47,40 @@ class InvoiceTest < Minitest::Test
     assert_equal Time.parse("2014-03-15"), invoice.updated_at
   end
 
-  def test_invoice_calls_parent
+  def test_invoice_calls_parent_for_merchant
     parent = MiniTest::Mock.new
     invoice = Invoice.new(test_invoice_info, parent)
     parent.expect(:find_merchant_by_merchant_id, nil, [test_invoice_info[:merchant_id]])
     invoice.merchant
     parent.verify
+  end
+
+  def test_invoice_calls_parent_for_invocie_items
+    parent = MiniTest::Mock.new
+    invoice = Invoice.new(test_invoice_info, parent)
+    parent.expect(:find_invoice_items_by_invoice_id, nil, [test_invoice_info[:id]])
+    invoice.items
+    parent.verify
+  end
+
+  def test_invoice_calls_parent_for_transactions
+    parent = MiniTest::Mock.new
+    invoice = Invoice.new(test_invoice_info, parent)
+    parent.expect(:find_transactions_by_invoice_id, nil, [test_invoice_info[:id]])
+    invoice.transactions
+    parent.verify
+  end
+
+  def test_invoice_calls_parent_for_customer
+    parent = MiniTest::Mock.new
+    invoice = Invoice.new(test_invoice_info, parent)
+    parent.expect(:find_customer_by_customer_id, nil, [test_invoice_info[:customer_id]])
+    invoice.customer
+    parent.verify
+  end
+
+  def test_if_invoice_is_paid_in_full
+  skip
   end
 
 

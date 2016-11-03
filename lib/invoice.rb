@@ -1,4 +1,5 @@
 require 'time'
+require 'pry'
 
 class Invoice
 
@@ -23,6 +24,26 @@ attr_reader     :id,
 
   def merchant
     parent.find_merchant_by_merchant_id(merchant_id)
+  end
+
+  def items
+    parent.find_invoice_items_by_invoice_id(id)
+  end
+
+  def transactions
+    parent.find_transactions_by_invoice_id(id)
+  end
+
+  def customer
+    parent.find_customer_by_customer_id(customer_id)
+  end
+
+  def is_paid_in_full?
+
+  end
+
+  def total
+
   end
 
 end

@@ -51,4 +51,8 @@ class TransactionRepository
     end
   end
 
+  def find_invoice(invoice_id)
+    parent.find_invoice(invoice_id)
+  end
+
 end

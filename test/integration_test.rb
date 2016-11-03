@@ -7,6 +7,17 @@ require 'pry'
 
 class IntegrationTest < Minitest::Test
 
+  attr_reader     :se  
+
+  def setup
+    @se = SalesEngine.from_csv({:merchants => "./data/merchants.csv",
+                    :items => "./data/items.csv",
+                    :invoices => "./data/invoices.csv",
+                    :invoice_items => "./data/invoice_items.csv",
+                    :transactions => "./data/transactions.csv",
+                    :customers => "./data/customers.csv"})
+  end
+
   #START of SalesEngine related tests
 
   def test_it_can_find_merchant_from_item
@@ -16,20 +27,42 @@ class IntegrationTest < Minitest::Test
     assert_equal 12334671, item.merchant.id
   end
 
-  def test_it_can_find_items_from_merchant_case1
-      se = SalesEngine.from_csv({:items => "./data/items.csv", 
-                                :merchants => "./data/merchants.csv"})
+  def test_it_can_find_items_from_merchant
     merchant = se.merchants.find_by_id(12334671)
     assert_equal 263405705, merchant.items.first.id
   end
 
-  def test_it_can_find_items_from_merchant_case2
-      se = SalesEngine.from_csv({:items => "./data/items.csv", 
-                                :merchants => "./data/merchants.csv",
-                                :invoices => "./data/invoices.csv"})
+
+   def test_it_can_find_invoices_from_merchant
     merchant = se.merchants.find_by_id(12334671)
     assert_equal 207, merchant.invoices.first.id
   end
+
+  def test_it_can_find_merchant_from_invoice
+    invoice = se.invoices.find_by_id(207)
+    assert_equal 12334671, invoice.merchant.id
+  end
+
+  def test_it_can_find_invoice_items_from_invoice
+    invoice = se.invoices.find_by_id(207)
+    assert_equal 4427, invoice.transactions.first.id
+  end
+
+  def test_it_can_find_transactions_from_invoice
+    invoice = se.invoices.find_by_id(207)
+    assert_equal 4427, invoice.transactions.first.id
+  end
+
+  def test_it_can_find_customer_from_invoice
+    invoice = se.invoices.find_by_id(207)
+    assert_equal 40, invoice.customer.id
+  end
+
+  def test_it_can_find_invoice_from_transaction
+    transaction = se.transactions.find_by_id(207)
+    assert_equal 4531, transaction.invoice.id
+  end
+
 
   #END of SalesEngine related tests
 

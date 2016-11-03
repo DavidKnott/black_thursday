@@ -72,13 +72,12 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal 1, actual
   end
 
-  
+  def test_transaction_calls_parent_for_invoice
+    parent = MiniTest::Mock.new
+    transaction_repo = TransactionRepository.new("./data/transactions_one.csv", parent)
+    parent.expect(:find_invoice, nil, [26])
+    transaction_repo.find_invoice(26)
+    parent.verify
+  end
 
-  # def test_item_repo_calls_parent
-  #   parent = MiniTest::Mock.new
-  #   item_repo = ItemRepository.new("./data/items_one.csv", parent)
-  #   parent.expect(:find_merchant_by_merchant_id, nil, [26])
-  #   item_repo.find_merchant_by_merchant_id(26)
-  #   parent.verify
-  # end
 end
