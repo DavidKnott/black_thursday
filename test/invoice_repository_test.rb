@@ -65,11 +65,35 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal 2, actual
   end
   
-  def test_invoice_repo_calls_parent
+  def test_invoice_repo_calls_parent_for_merchant
     parent = MiniTest::Mock.new
     invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
     parent.expect(:find_merchant_by_merchant_id, nil, [26])
     invoice_repo.find_merchant_by_merchant_id(26)
+    parent.verify
+  end
+
+  def test_invoice_repo_calls_parent_for_items
+    parent = MiniTest::Mock.new
+    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
+    parent.expect(:find_invoice_items, nil, [26])
+    invoice_repo.find_invoice_items(26)
+    parent.verify
+  end
+
+  def test_invoice_repo_calls_parent_for_transactions
+    parent = MiniTest::Mock.new
+    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
+    parent.expect(:find_transactions_by_invoice_id, nil, [26])
+    invoice_repo.find_transactions_by_invoice_id(26)
+    parent.verify
+  end
+
+  def test_invoice_repo_calls_parent_for_customers
+    parent = MiniTest::Mock.new
+    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
+    parent.expect(:find_customer_by_customer_id, nil, [26])
+    invoice_repo.find_customer_by_customer_id(26)
     parent.verify
   end
 end

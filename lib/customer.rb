@@ -22,4 +22,17 @@ class Customer
     @updated_at = Time.parse(customer_info[:updated_at])
   end
 
+  def invoices
+    parent.find_invoices_for_customer(id)
+  end
+
+  def merchants
+    merchant_id_list = invoices.map do |invoice|
+      invoice.merchant_id
+    end.uniq
+    merchant_id_list.map do |merchant_id|
+      parent.find_merchant(merchant_id)
+    end
+  end
+
 end

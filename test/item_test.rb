@@ -72,6 +72,7 @@ class ItemTest < MiniTest::Test
   end
 
   def test_unit_price_to_dollars
+    assert_equal Float, test_item1.unit_price_to_dollars.class
     assert_equal 10.99, test_item1.unit_price_to_dollars
     assert_equal 3.85, test_item2.unit_price_to_dollars
   end

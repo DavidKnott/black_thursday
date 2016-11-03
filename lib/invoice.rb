@@ -1,4 +1,5 @@
 require 'time'
+require 'pry'
 
 class Invoice
 
@@ -23,6 +24,38 @@ attr_reader     :id,
 
   def merchant
     parent.find_merchant_by_merchant_id(merchant_id)
+  end
+
+  def items
+    invoice_items.map do |invoice_item|
+      parent.find_item(invoice_item.item_id)
+    end
+  end
+
+  def invoice_items
+    parent.find_invoice_items(id)
+  end
+
+  def transactions
+    parent.find_transactions_by_invoice_id(id)
+  end
+
+  def customer
+    parent.find_customer_by_customer_id(customer_id)
+  end
+
+  def is_paid_in_full?
+    transactions.any? do |transaction|
+      transaction.result == "success"
+    end
+  end
+
+  def total
+    return nil unless is_paid_in_full?
+    invoice_items.reduce(0) do |invoice_total, invoice_item|
+      invoice_total += invoice_item.quantity * invoice_item.unit_price
+      invoice_total
+    end
   end
 
 end

@@ -45,4 +45,12 @@ class CustomerRepository
     end
   end
 
+  def find_invoices_for_customer(customer_id)
+    parent.find_invoices_for_customer(customer_id)
+  end
+
+  def find_merchant(merchant_id)
+    parent.find_merchant(merchant_id)
+  end
+
 end
