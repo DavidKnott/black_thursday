@@ -16,7 +16,6 @@ class SalesEngine
     raise "Please enter a valid file name" if items.nil? && merchants.nil? && invoices.nil?
   end
 
-
   def self.from_csv(files)
     self.new(files)
   end
@@ -43,6 +42,30 @@ class SalesEngine
 
   def find_invoices_by_merchant_id(merchant_id)
     invoices.find_all_by_merchant_id(merchant_id)
+  end
+
+  def merchants_list
+    merchants.all
+  end
+
+  def merchants_count
+    merchants.count_all
+  end
+
+  def items_list
+    items.all
+  end
+
+  def items_count
+    items.count_all
+  end
+
+  def invoices_list
+    invoices.all
+  end
+  
+  def invoices_count
+    invoices.count_all
   end
 
 end

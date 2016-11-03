@@ -14,21 +14,16 @@ class SalesEngineTest < Minitest::Test
 
   def test_with_non_existing_csv
     assert_raises "Please enter a valid file name" do
-    se = SalesEngine.from_csv({:items => "./data/magic.csv"})
+      SalesEngine.from_csv({:items => "./data/magic.csv"})
     end
   end
 
-  def test_merchantrepository_exists
+  def test_merchant_repository_exists
     se = SalesEngine.from_csv(test_config)
     assert se.merchants    
   end
 
   def test_item_repository_exists
-    se = SalesEngine.from_csv(test_config)
-    assert se.items
-  end
-
-  def test_merchant_repository_exists
     se = SalesEngine.from_csv(test_config)
     assert se.items
   end
@@ -52,8 +47,5 @@ class SalesEngineTest < Minitest::Test
     se = SalesEngine.from_csv(test_config)
     assert_equal 234,se.find_invoices_by_merchant_id(12334159).first.id
   end
-
-
-
 
 end
