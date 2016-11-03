@@ -39,7 +39,10 @@ attr_reader     :id,
   end
 
   def is_paid_in_full?
-
+    #binding.pry
+    transactions.any? do |transaction|
+      transaction.result == "success"
+    end
   end
 
   def total

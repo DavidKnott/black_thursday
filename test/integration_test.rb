@@ -23,59 +23,64 @@ class IntegrationTest < Minitest::Test
 
   #START of SalesEngine related tests
 
-  def test_it_can_find_merchant_from_item
-    item = se.items.find_by_id(263405705)
-    assert_equal 12334671, item.merchant.id
-  end
+  # def test_it_can_find_merchant_from_item
+  #   item = se.items.find_by_id(263405705)
+  #   assert_equal 12334671, item.merchant.id
+  # end
 
-  def test_it_can_find_items_from_merchant
-    test_result = test_merchant.items
-    assert_equal Item, test_result.first.class
-  end
+  # def test_it_can_find_items_from_merchant
+  #   test_result = test_merchant.items
+  #   assert_equal Item, test_result.first.class
+  # end
 
-  def test_it_can_find_invoices_from_merchant
-    merchant = se.merchants.find_by_id(12334671)
-    assert_equal 207, merchant.invoices.first.id
-  end
+  # def test_it_can_find_invoices_from_merchant
+  #   merchant = se.merchants.find_by_id(12334671)
+  #   assert_equal 207, merchant.invoices.first.id
+  # end
 
-  def test_it_can_find_invoices_for_merchant
-    test_result = test_merchant.invoices
-    assert_equal Invoice, test_result.first.class
-  end
+  # def test_it_can_find_invoices_for_merchant
+  #   test_result = test_merchant.invoices
+  #   assert_equal Invoice, test_result.first.class
+  # end
 
-  def test_find_customer_for_merchant
-    test_result = test_merchant.customers
-    assert_equal Customer, test_result.first.class
-  end
+  # def test_find_customer_for_merchant
+  #   test_result = test_merchant.customers
+  #   assert_equal Customer, test_result.first.class
+  # end
 
-  def test_find_customer_for_merchant
-    test_result = test_customer.merchants
-    assert_equal Merchant, test_result.first.class
-  end
+  # def test_find_customer_for_merchant
+  #   test_result = test_customer.merchants
+  #   assert_equal Merchant, test_result.first.class
+  # end
 
-  def test_it_can_find_merchant_from_invoice
-    invoice = se.invoices.find_by_id(207)
-    assert_equal 12334671, invoice.merchant.id
-  end
+  # def test_it_can_find_merchant_from_invoice
+  #   invoice = se.invoices.find_by_id(207)
+  #   assert_equal 12334671, invoice.merchant.id
+  # end
 
-  def test_it_can_find_invoice_items_from_invoice
-    invoice = se.invoices.find_by_id(207)
-    assert_equal 4427, invoice.transactions.first.id
-  end
+  # def test_it_can_find_invoice_items_from_invoice
+  #   invoice = se.invoices.find_by_id(207)
+  #   assert_equal 4427, invoice.transactions.first.id
+  # end
 
-  def test_it_can_find_transactions_from_invoice
-    invoice = se.invoices.find_by_id(207)
-    assert_equal 4427, invoice.transactions.first.id
-  end
+  # def test_it_can_find_transactions_from_invoice
+  #   invoice = se.invoices.find_by_id(207)
+  #   assert_equal 4427, invoice.transactions.first.id
+  # end
 
-  def test_it_can_find_customer_from_invoice
-    invoice = se.invoices.find_by_id(207)
-    assert_equal 40, invoice.customer.id
-  end
+  # def test_it_can_find_customer_from_invoice
+  #   invoice = se.invoices.find_by_id(207)
+  #   assert_equal 40, invoice.customer.id
+  # end
 
-  def test_it_can_find_invoice_from_transaction
-    transaction = se.transactions.find_by_id(207)
-    assert_equal 4531, transaction.invoice.id
+  # def test_it_can_find_invoice_from_transaction
+  #   transaction = se.transactions.find_by_id(207)
+  #   assert_equal 4531, transaction.invoice.id
+  # end
+
+  def test_if_invoice_is_paid_in_full
+    invoice = se.transactions.find_by_id(207).invoice
+    assert invoice.is_paid_in_full?
   end
 
 
