@@ -27,7 +27,13 @@ attr_reader     :id,
   end
 
   def items
-    parent.find_items_by_merchant_id(merchant_id)
+    invoice_items.map do |invoice_item|
+      parent.find_item(invoice_item.item_id)
+    end
+  end
+
+  def invoice_items
+    parent.find_invoice_items(id)
   end
 
   def transactions
@@ -43,7 +49,11 @@ attr_reader     :id,
   end
 
   def total
-
+    return nil unless is_paid_in_full?
+    items.reduce(0) do |invoice_total, item|
+      invoice_total += item.unit_price_to_dollars
+      invoice_total
+    end
   end
 
 end
