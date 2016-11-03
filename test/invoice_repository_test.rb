@@ -76,7 +76,7 @@ class InvoiceRepositoryTest < Minitest::Test
   def test_invoice_repo_calls_parent_for_items
     parent = MiniTest::Mock.new
     invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
-    parent.expect(:find_invoice_items_by_invoice_id, nil, [26])
+    parent.expect(:find_invoice_by_invoice_id, nil, [26])
     invoice_repo.find_invoice_items_by_invoice_id(26)
     parent.verify
   end

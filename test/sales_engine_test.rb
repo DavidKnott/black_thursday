@@ -59,7 +59,7 @@ class SalesEngineTest < Minitest::Test
     assert_equal 234, se.find_invoices_by_merchant_id(12334159).first.id
   end
 
-  def test_it_calls_invoice_items_repo_and_finds_invoice_items_by_invoice_id
+  def test_it_calls_items_repo_and_finds_items_by_invoice_id
     assert_equal 27, se.find_invoice_items_by_invoice_id(6).first.id
   end
 

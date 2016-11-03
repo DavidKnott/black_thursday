@@ -27,7 +27,7 @@ attr_reader     :id,
   end
 
   def items
-    parent.find_invoice_items_by_invoice_id(id)
+    parent.find_items_by_merchant_id(merchant_id)
   end
 
   def transactions
