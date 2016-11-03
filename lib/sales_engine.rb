@@ -54,7 +54,13 @@ class SalesEngine
   end
 
   def find_merchant_by_merchant_id(merchant_id)
+    #Duplicate method, need to resolve during refactoring!!!
     merchants.find_by_id(merchant_id)
+  end
+
+  def find_merchant(merchant_id)
+    #Duplicate method, need to resolve during refactoring!!!
+    find_merchant_by_merchant_id(merchant_id)
   end
 
   def find_items_by_merchant_id(merchant_id)
@@ -63,6 +69,14 @@ class SalesEngine
 
   def find_invoices_by_merchant_id(merchant_id)
     invoices.find_all_by_merchant_id(merchant_id)
+  end
+
+  def find_customer(customer_id)
+    customers.find_by_id(customer_id)
+  end
+
+  def find_invoices_for_customer(customer_id)
+    invoices.find_all_by_customer_id(customer_id)
   end
 
   def merchants_list
