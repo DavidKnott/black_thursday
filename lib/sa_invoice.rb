@@ -18,13 +18,13 @@ module SaInvoice
   end
 
   def average_invoices_per_merchant
-    invoice_count_list = build_invoice_count_list 
+    invoice_count_list = build_invoice_count_list
     bigdecimal_to_float(list_average(invoice_count_list))
   end
 
   def average_invoices_per_merchant_standard_deviation
-    invoice_count_list = build_invoice_count_list 
-    standard_deviation(invoice_count_list)    
+    invoice_count_list = build_invoice_count_list
+    standard_deviation(invoice_count_list)
   end
 
   def top_merchants_filter(invoice_count_mean, invoice_count_std_dev)
@@ -34,24 +34,24 @@ module SaInvoice
   end
 
   def top_merchants_by_invoice_count
-    invoice_count_mean = average_invoices_per_merchant
-    invoice_count_std_dev = average_invoices_per_merchant_standard_deviation
-    top_merchants_filter(invoice_count_mean, invoice_count_std_dev)
+    average = average_invoices_per_merchant
+    standard_deviation = average_invoices_per_merchant_standard_deviation
+    top_merchants_filter(average, standard_deviation)
   end
 
   def bottom_merchants_by_invoice_count
-    invoice_count_average = average_invoices_per_merchant
-    invoice_count_standard_deviation = average_invoices_per_merchant_standard_deviation
+    average = average_invoices_per_merchant
+    merchant_standard_deviation = average_invoices_per_merchant_standard_deviation
     merchants_list.find_all do |merchant|
-      merchant.invoices.count < invoice_count_average - (2 * invoice_count_standard_deviation)
+      merchant.invoices.count < average - (2 * merchant_standard_deviation)
     end
   end
 
   def invoice_count_per_weekday
-    invoices_list.reduce({}) do |weekday_sum, invoice|
-      weekday_sum[invoice.created_at.wday] = 1 if weekday_sum[invoice.created_at.wday].nil?
-      weekday_sum[invoice.created_at.wday] += 1 if !weekday_sum[invoice.created_at.wday].nil?
-      weekday_sum
+    invoices_list.reduce({}) do |sum, invoice|
+      sum[invoice.created_at.wday] = 1 if sum[invoice.created_at.wday].nil?
+      sum[invoice.created_at.wday] += 1 if !sum[invoice.created_at.wday].nil?
+      sum
     end
   end
 
@@ -69,10 +69,10 @@ module SaInvoice
   end
 
   def top_days_by_invoice_count
-    weekday_summary = invoice_count_per_weekday 
-    weekday_summary_mean = list_average(weekday_summary.values)
-    weekday_summary_std_dev = standard_deviation(weekday_summary.values)
-    top_weekday_count_filter(weekday_summary, weekday_summary_mean, weekday_summary_std_dev)
+    weekdays = invoice_count_per_weekday 
+    average = list_average(weekdays.values)
+    weekday_standard_deviation = standard_deviation(weekdays.values)
+    top_weekday_count_filter(weekdays, average, weekday_standard_deviation)
   end
 
   def invoice_status(requested)

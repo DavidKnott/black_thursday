@@ -12,12 +12,12 @@ class CustomerRepository
 
   def initialize(file_path, parent)
     @parent = parent
-    @customers_list = [] 
+    @customers_list = []
     load_costumers(file_path)
   end
 
-  def load_costumers(file_path)
-    costumers_csv = CSV.open(file_path, headers:true, header_converters: :symbol)
+  def load_costumers(path)
+    costumers_csv = CSV.open(path, headers:true, header_converters: :symbol)
     costumers_csv.each do |one_customer|
       @customers_list << Customer.new(one_customer, self)
     end

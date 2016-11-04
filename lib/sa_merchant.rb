@@ -25,12 +25,12 @@ module SaMerchant
     end
   end
 
-  def find_merchant_by_merchant_id(merchant_id)
-    sales_engine.find_merchant_by_merchant_id(merchant_id)
+  def find_merchant(merchant_id)
+    sales_engine.find_merchant(merchant_id)
   end
 
   def items_per_merchant(merchant_id)
-    merchant = find_merchant_by_merchant_id(merchant_id)
+    merchant = find_merchant(merchant_id)
     merchant.items.length
   end
 
@@ -43,7 +43,7 @@ module SaMerchant
   end
 
   def average_item_price_for_merchant(merchant_id)
-    merchant = find_merchant_by_merchant_id(merchant_id)
+    merchant = find_merchant(merchant_id)
     bigdecimal_round(list_average(items_unit_price_list(merchant.items)))
   end
 

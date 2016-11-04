@@ -1,6 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest/autorun'
+require_relative 'test_helper'
 require './lib/invoice_item'
 
 class InvoiceItemTest < MiniTest::Test
@@ -55,15 +53,5 @@ class InvoiceItemTest < MiniTest::Test
   def test_unit_price_to_dollars
     assert_equal 0.11, test_invoice_item.unit_price_to_dollars
   end
-
-  # def test_item_calls_parent
-  #   parent = MiniTest::Mock.new
-  #   item = Item.new(test_item_info, parent)
-  #   parent.expect(:find_merchant_by_merchant_id, nil, [test_item_info[:merchant_id]])
-  #   item.merchant
-  #   parent.verify
-  # end
-
-
-
+  
 end

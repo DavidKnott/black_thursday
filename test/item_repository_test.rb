@@ -1,6 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest/autorun'
+require_relative 'test_helper'
 require './lib/item_repository'
 
 class ItemRepositoryTest < Minitest::Test
@@ -19,32 +17,8 @@ class ItemRepositoryTest < Minitest::Test
     refute_empty test_item_repo.items_list
   end
 
-  def test_item_list_stores_name
-    assert_equal "Glitter scrabble frames", test_item_repo.items_list[1].name
-  end
-
-  def test_item_list_stores_id
-    assert_equal 263399263, test_item_repo.items_list[26].id
-  end
-
-  def test_item_list_stores_description
-    assert test_item_repo.items_list[26].description.start_with?("Acrylique sur toile exécu")
-  end
-
-  def test_item_list_stores_unit_price
-    assert_equal 7.0, test_item_repo.items_list[3].unit_price.to_f
-  end
-
-  def test_item_list_stores_created_at
-    assert_equal Time.parse("2016-01-11 13:32:00 UTC"), test_item_repo.items_list[56].created_at
-  end
-
-  def test_item_list_stores_updated_at
-    assert_equal Time.parse("1972-09-10 20:13:31 UTC"), test_item_repo.items_list[49].updated_at
-  end
-
-  def test_item_list_stores_merchant_id
-    assert_equal 12334183, test_item_repo.items_list[19].merchant_id
+  def test_item_list_stores_items
+    assert_equal Item, test_item_repo.items_list.first.class
   end
 
   def test_all_method_returns_all_items
@@ -113,8 +87,8 @@ class ItemRepositoryTest < Minitest::Test
   def test_item_repo_calls_parent
     parent = MiniTest::Mock.new
     item_repo = ItemRepository.new("./data/items_one.csv", parent)
-    parent.expect(:find_merchant_by_merchant_id, nil, [26])
-    item_repo.find_merchant_by_merchant_id(26)
+    parent.expect(:find_merchant, nil, [26])
+    item_repo.find_merchant(26)
     parent.verify
   end
 end

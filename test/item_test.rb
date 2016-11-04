@@ -1,6 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest/autorun'
+require_relative 'test_helper'
 require './lib/item'
 
 class ItemTest < MiniTest::Test
@@ -80,7 +78,7 @@ class ItemTest < MiniTest::Test
   def test_item_calls_parent
     parent = MiniTest::Mock.new
     item = Item.new(test_item_info, parent)
-    parent.expect(:find_merchant_by_merchant_id, nil, [test_item_info[:merchant_id]])
+    parent.expect(:find_merchant, nil, [test_item_info[:merchant_id]])
     item.merchant
     parent.verify
   end

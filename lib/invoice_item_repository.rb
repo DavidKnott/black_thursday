@@ -11,7 +11,7 @@ class InvoiceItemRepository
 
   def initialize(file_path, parent)
     @parent = parent
-    @invoice_items_list = [] 
+    @invoice_items_list = []
     load_invoice_items(file_path)
   end
 
@@ -44,7 +44,5 @@ class InvoiceItemRepository
       invoice_item.invoice_id == invoice_id
     end
   end
-
-  
 
 end

@@ -1,9 +1,6 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest/autorun'
+require_relative 'test_helper'
 require './lib/sales_analyst'
 require './lib/sales_engine'
-require 'pry'
 
 
 class SalesAnalystTest < MiniTest::Test

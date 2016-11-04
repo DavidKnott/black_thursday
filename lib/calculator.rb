@@ -3,7 +3,8 @@ require 'bigdecimal'
 
 module Calculator
 
-  WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday",
+              "Thursday", "Friday", "Saturday"]
 
   def average(total, count)
     BigDecimal(BigDecimal(total) / BigDecimal(count))

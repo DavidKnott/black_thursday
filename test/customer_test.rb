@@ -1,6 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest/autorun'
+require_relative 'test_helper'
 require './lib/customer'
 
 class CustomerTest < MiniTest::Test

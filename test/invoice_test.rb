@@ -1,8 +1,5 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest/autorun'
+require_relative 'test_helper'
 require './lib/invoice'
-require 'pry'
 
 class InvoiceTest < Minitest::Test
 
@@ -50,7 +47,7 @@ class InvoiceTest < Minitest::Test
   def test_invoice_calls_parent_for_merchant
     parent = MiniTest::Mock.new
     invoice = Invoice.new(test_invoice_info, parent)
-    parent.expect(:find_merchant_by_merchant_id, nil, [test_invoice_info[:merchant_id]])
+    parent.expect(:find_merchant, nil, [test_invoice_info[:merchant_id]])
     invoice.merchant
     parent.verify
   end
@@ -66,7 +63,7 @@ class InvoiceTest < Minitest::Test
   def test_invoice_calls_parent_for_transactions
     parent = MiniTest::Mock.new
     invoice = Invoice.new(test_invoice_info, parent)
-    parent.expect(:find_transactions_by_invoice_id, nil, [test_invoice_info[:id]])
+    parent.expect(:find_transactions, nil, [test_invoice_info[:id]])
     invoice.transactions
     parent.verify
   end
@@ -74,7 +71,7 @@ class InvoiceTest < Minitest::Test
   def test_invoice_calls_parent_for_customer
     parent = MiniTest::Mock.new
     invoice = Invoice.new(test_invoice_info, parent)
-    parent.expect(:find_customer_by_customer_id, nil, [test_invoice_info[:customer_id]])
+    parent.expect(:find_customer, nil, [test_invoice_info[:customer_id]])
     invoice.customer
     parent.verify
   end

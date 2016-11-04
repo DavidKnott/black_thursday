@@ -11,11 +11,11 @@ class Merchant
   end
 
   def items
-    parent.find_items_by_merchant_id(id)
+    parent.find_items(id)
   end
 
   def invoices
-    parent.find_invoices_by_merchant_id(id)
+    parent.find_invoices(id)
   end
 
   def customers
