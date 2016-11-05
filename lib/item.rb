@@ -32,6 +32,7 @@ class Item
     bigdecimal_to_float(unit_price)
   end
 
+  #Tested through Mock
   def merchant
     parent.find_merchant(merchant_id)
   end

@@ -14,7 +14,9 @@ module MerchantAnalyst
   end
 
   def total_merchants
-    sales_engine.merchants_count
+    merchants_list.count
+    #We can eliminate the below method from sales_engine!!!
+    # sales_engine.merchants_count
   end
 
   def average_items_per_merchant_standard_deviation

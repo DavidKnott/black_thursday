@@ -81,6 +81,7 @@ class CalculatorTest < Minitest::Test
   def test_weekday
     assert_equal "Sunday", weekday(0)
     refute_equal "Tuesday", weekday(4)
+    assert_nil weekday(7)
   end
 
   def test_percentage

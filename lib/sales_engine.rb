@@ -77,6 +77,10 @@ class SalesEngine
     invoice_items.find_all_by_invoice_id(invoice_id)
   end
 
+  def find_transaction(transaction_id)
+    transactions.find_by_id(transaction_id)
+  end
+
   def find_transactions(invoice_id)
     transactions.find_all_by_invoice_id(invoice_id)
   end

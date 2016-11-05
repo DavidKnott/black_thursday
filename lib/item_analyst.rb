@@ -11,6 +11,8 @@ module ItemAnalyst
 
   def total_items
     sales_engine.items_count
+    #This method could be eliminated from sales_engine!!!
+    # sales_engine.items_count
   end
 
   def items_unit_price_list(merchant_items = nil)

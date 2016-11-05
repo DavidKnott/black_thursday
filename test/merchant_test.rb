@@ -38,5 +38,4 @@ class MerchantTest < MiniTest::Test
     parent.verify
   end
 
-
 end

@@ -8,7 +8,7 @@ class InvoiceTest < Minitest::Test
 
   def setup
     @test_invoice_info = {:id => 1,
-                                :customer_id => 1,
+                                :customer_id => 2,
                                 :merchant_id => 12335938,
                                 :status => "pending",
                                 :created_at => "2009-02-07",
@@ -25,7 +25,7 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_stores_customer_id
-    assert_equal 1, invoice.customer_id
+    assert_equal 2, invoice.customer_id
   end
 
   def test_it_stores_merchant_id
