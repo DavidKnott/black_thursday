@@ -1,6 +1,8 @@
 require_relative 'calculator'
 
-module SaItem
+#Colection of methods used for Item related
+#sales analysis within sales_analyst
+module ItemAnalyst
   include Calculator
 
   def items_list

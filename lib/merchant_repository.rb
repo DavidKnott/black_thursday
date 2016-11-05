@@ -1,7 +1,7 @@
 require "csv"
-require 'pry'
 require_relative "merchant"
 
+#Collection of all Merchant instances
 class MerchantRepository
 
   attr_reader   :merchants_list,

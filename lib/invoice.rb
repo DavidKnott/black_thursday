@@ -1,6 +1,6 @@
 require 'time'
-require 'pry'
 
+#Store details of a single invoice
 class Invoice
 
 attr_reader     :id,

@@ -2,6 +2,7 @@ require 'bigdecimal'
 require 'time'
 require_relative 'calculator'
 
+#Storing details of a single transaction
 class Transaction
   include Calculator
 
@@ -19,7 +20,8 @@ class Transaction
     @id = transaction_info[:id].to_i
     @invoice_id = transaction_info[:invoice_id].to_i
     @credit_card_number = transaction_info[:credit_card_number].to_i
-    @credit_card_expiration_date  = transaction_info[:credit_card_expiration_date]
+    @credit_card_expiration_date = \
+              transaction_info[:credit_card_expiration_date]
     @result = transaction_info[:result]
     @created_at = Time.parse(transaction_info[:created_at])
     @updated_at = Time.parse(transaction_info[:updated_at])

@@ -2,6 +2,7 @@ require 'bigdecimal'
 require 'time'
 require_relative 'calculator'
 
+#Store details of a single Invoice Item
 class InvoiceItem
   include Calculator
   PRICE_ADJUSTER = 100

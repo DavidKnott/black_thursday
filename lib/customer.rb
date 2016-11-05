@@ -2,6 +2,7 @@ require 'bigdecimal'
 require 'time'
 require_relative 'calculator'
 
+#Storing details of a single customer
 class Customer
   include Calculator
 

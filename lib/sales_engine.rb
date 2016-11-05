@@ -1,4 +1,3 @@
-require 'pry'
 require_relative 'merchant_repository'
 require_relative 'item_repository'
 require_relative 'invoice_repository'
@@ -6,6 +5,8 @@ require_relative 'invoice_item_repository'
 require_relative 'transaction_repository'
 require_relative 'customer_repository'
 
+#Support for Sales Analyst layer, connecting Sales Analyst and
+#various repositories with each other
 class SalesEngine
 
   attr_reader   :merchants,
@@ -36,23 +37,28 @@ class SalesEngine
   end
 
   def create_merchants_repository(files)
-    MerchantRepository.new(files[:merchants], self) if files.include?(:merchants)
+    MerchantRepository.new(files[:merchants], self) \
+                        if files.include?(:merchants)
   end
 
   def create_invoices_repository(files)
-    InvoiceRepository.new(files[:invoices], self)  if files.include?(:invoices)
+    InvoiceRepository.new(files[:invoices], self) \
+                        if files.include?(:invoices)
   end
 
   def create_invoice_item_repository(files)
-    InvoiceItemRepository.new(files[:invoice_items], self)  if files.include?(:invoice_items)
+    InvoiceItemRepository.new(files[:invoice_items], self) \
+                            if files.include?(:invoice_items)
   end
 
   def create_transaction_repository(files)
-    TransactionRepository.new(files[:transactions], self)  if files.include?(:transactions)
+    TransactionRepository.new(files[:transactions], self) \
+                            if files.include?(:transactions)
   end
 
   def create_customer_repository(files)
-    CustomerRepository.new(files[:customers], self)  if files.include?(:customers)
+    CustomerRepository.new(files[:customers], self) \
+                        if files.include?(:customers)
   end
 
   def find_merchant(merchant_id)
@@ -110,7 +116,7 @@ class SalesEngine
   def invoices_list
     invoices.all
   end
-  
+
   def invoices_count
     invoices.count_all
   end

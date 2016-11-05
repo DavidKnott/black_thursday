@@ -1,6 +1,7 @@
 require "csv"
 require_relative "invoice"
 
+#Collection of all Invoice instances
 class InvoiceRepository
 
   attr_reader   :invoices_list,

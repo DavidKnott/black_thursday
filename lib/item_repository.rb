@@ -2,7 +2,7 @@ require "csv"
 require 'time'
 require_relative "item"
 
-
+#Collection of all Item instances
 class ItemRepository
 
   attr_reader   :items_list,

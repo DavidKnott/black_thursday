@@ -1,6 +1,7 @@
-require 'pry'
 require 'bigdecimal'
 
+#Collection of generic methods used to perform
+#various calculations to perform sales analysis
 module Calculator
 
   WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday",

@@ -1,7 +1,7 @@
 require 'csv'
 require_relative 'customer'
-require 'pry'
 
+#Collection of all Customer instances
 class CustomerRepository
 
   attr_reader     :customers_list,

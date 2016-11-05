@@ -36,8 +36,8 @@ class SalesAnalystTest < MiniTest::Test
     assert_equal 2.88, sales_analyst.average_items_per_merchant
   end
 
-  def test_it_finds_how_man_items_one_merchant_has
-    assert_equal 1, sales_analyst.items_per_merchant(12334174)
+  def test_it_finds_how_many_items_one_merchant_has
+    assert_equal 1, sales_analyst.items_count(12334174)
   end
 
   def test_it_makes_array_for_how_many_items_each_merchant_has

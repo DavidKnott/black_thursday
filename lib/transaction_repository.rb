@@ -1,7 +1,7 @@
 require 'csv'
 require_relative 'transaction'
-require 'pry'
 
+#Collection of all Transation instances
 class TransactionRepository
 
   attr_reader     :transactions_list,
@@ -12,12 +12,14 @@ class TransactionRepository
 
   def initialize(file_path, parent)
     @parent = parent
-    @transactions_list = [] 
+    @transactions_list = []
     load_transactions(file_path)
   end
 
   def load_transactions(file_path)
-    transactions_csv = CSV.open(file_path, headers:true, header_converters: :symbol)
+    transactions_csv = CSV.open(file_path,
+                                headers:true,
+                                header_converters: :symbol)
     transactions_csv.each do |one_transaction|
       @transactions_list << Transaction.new(one_transaction, self)
     end

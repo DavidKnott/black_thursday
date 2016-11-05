@@ -2,6 +2,7 @@ require 'bigdecimal'
 require 'time'
 require_relative 'calculator'
 
+#Store details of a single item
 class Item
   include Calculator
 

@@ -1,6 +1,8 @@
 require_relative 'calculator'
 
-module SaInvoice
+#Colection of methods used for Invoice related
+#sales analysis within sales_analyst
+module InvoiceAnalyst
   include Calculator
 
   def invoices_list
@@ -41,9 +43,9 @@ module SaInvoice
 
   def bottom_merchants_by_invoice_count
     average = average_invoices_per_merchant
-    merchant_standard_deviation = average_invoices_per_merchant_standard_deviation
+    merchant_stndrd_dviation = average_invoices_per_merchant_standard_deviation
     merchants_list.find_all do |merchant|
-      merchant.invoices.count < average - (2 * merchant_standard_deviation)
+      merchant.invoices.count < average - (2 * merchant_stndrd_dviation)
     end
   end
 
@@ -55,9 +57,9 @@ module SaInvoice
     end
   end
 
-  def top_weekday_count_filter(weekday_summary, weekday_summary_mean, weekday_summary_std_dev)
-    numbered_weekdays = weekday_summary.keys.find_all do |weekday|
-      weekday_summary[weekday] > weekday_summary_mean + weekday_summary_std_dev
+  def top_count_filter(summary, summary_average, summary_standard_devitation)
+    numbered_weekdays = summary.keys.find_all do |weekday|
+      summary[weekday] > summary_average + summary_standard_devitation
     end
     top_weekday_identifier(numbered_weekdays)
   end
@@ -69,10 +71,10 @@ module SaInvoice
   end
 
   def top_days_by_invoice_count
-    weekdays = invoice_count_per_weekday 
+    weekdays = invoice_count_per_weekday
     average = list_average(weekdays.values)
     weekday_standard_deviation = standard_deviation(weekdays.values)
-    top_weekday_count_filter(weekdays, average, weekday_standard_deviation)
+    top_count_filter(weekdays, average, weekday_standard_deviation)
   end
 
   def invoice_status(requested)
