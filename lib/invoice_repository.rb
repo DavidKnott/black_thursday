@@ -1,6 +1,7 @@
 require "csv"
 require_relative "invoice"
 
+#Collection of all Invoice instances
 class InvoiceRepository
 
   attr_reader   :invoices_list,
@@ -8,10 +9,10 @@ class InvoiceRepository
 
   def inspect
   end
-  
+
   def initialize(file_path, parent)
     @parent = parent
-    @invoices_list = [] 
+    @invoices_list = []
     load_items(file_path)
   end
 
@@ -54,28 +55,24 @@ class InvoiceRepository
     end
   end
 
-  def find_merchant_by_merchant_id(merchant_id)
-    parent.find_merchant_by_merchant_id(merchant_id)
+  def find_merchant(merchant_id)
+    parent.find_merchant(merchant_id)
   end
 
-  # def find_items_by_merchant_id(merchant_id)
-  #   parent.find_items_by_merchant_id(merchant_id)
-  # end
-
-  def find_transactions_by_invoice_id(invoice_id)
-    parent.find_transactions_by_invoice_id(invoice_id)
+  def find_transactions(invoice_id)
+    parent.find_transactions(invoice_id)
   end
 
-  def find_customer_by_customer_id(customer_id)
-    parent.find_customer_by_customer_id(customer_id)
+  def find_customer(customer_id)
+    parent.find_customer(customer_id)
   end
 
   def find_invoice_items(invoice_id)
     parent.find_invoice_items(invoice_id)
   end
-  
+
   def find_item(item_id)
     parent.find_item(item_id)
   end
 
-end  
+end

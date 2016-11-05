@@ -1,9 +1,11 @@
-require 'pry'
 require 'bigdecimal'
 
+#Collection of generic methods used to perform
+#various calculations to perform sales analysis
 module Calculator
 
-  WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday",
+              "Thursday", "Friday", "Saturday"]
 
   def average(total, count)
     BigDecimal(BigDecimal(total) / BigDecimal(count))

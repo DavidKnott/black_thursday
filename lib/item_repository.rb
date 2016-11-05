@@ -2,7 +2,7 @@ require "csv"
 require 'time'
 require_relative "item"
 
-
+#Collection of all Item instances
 class ItemRepository
 
   attr_reader   :items_list,
@@ -13,7 +13,7 @@ class ItemRepository
 
   def initialize(file_path, parent)
     @parent = parent
-    @items_list = [] 
+    @items_list = []
     load_items(file_path)
   end
 
@@ -68,8 +68,8 @@ class ItemRepository
     end
   end
 
-  def find_merchant_by_merchant_id(merchant_id)
-    parent.find_merchant_by_merchant_id(merchant_id)
+  def find_merchant(merchant_id)
+    parent.find_merchant(merchant_id)
   end
 
 end

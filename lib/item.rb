@@ -2,6 +2,7 @@ require 'bigdecimal'
 require 'time'
 require_relative 'calculator'
 
+#Store details of a single item
 class Item
   include Calculator
 
@@ -31,8 +32,9 @@ class Item
     bigdecimal_to_float(unit_price)
   end
 
+  #Tested through Mock
   def merchant
-    parent.find_merchant_by_merchant_id(merchant_id)
+    parent.find_merchant(merchant_id)
   end
 
 end

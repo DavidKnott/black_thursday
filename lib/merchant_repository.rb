@@ -1,7 +1,7 @@
 require "csv"
-require 'pry'
 require_relative "merchant"
 
+#Collection of all Merchant instances
 class MerchantRepository
 
   attr_reader   :merchants_list,
@@ -12,12 +12,12 @@ class MerchantRepository
 
   def initialize(file_path, parent)
     @parent = parent
-    @merchants_list = [] 
+    @merchants_list = []
     load_merchants(file_path)
   end
 
-  def load_merchants(file_path)
-    merchants_csv = CSV.open(file_path, headers:true, header_converters: :symbol)
+  def load_merchants(path)
+    merchants_csv = CSV.open(path, headers:true, header_converters: :symbol)
     merchants_csv.each do |one_merchant|
       @merchants_list << Merchant.new(one_merchant, self)
     end
@@ -49,16 +49,16 @@ class MerchantRepository
     end
   end
 
-  def find_items_by_merchant_id(merchant_id)
-    parent.find_items_by_merchant_id(merchant_id)
+  def find_items(merchant_id)
+    parent.find_items(merchant_id)
   end
-  
-  def find_invoices_by_merchant_id(merchant_id)
-    parent.find_invoices_by_merchant_id(merchant_id)
+
+  def find_invoices(merchant_id)
+    parent.find_invoices(merchant_id)
   end
 
   def find_customer(customer_id)
-    parent.find_customer(customer_id) 
+    parent.find_customer(customer_id)
   end
-  
+
 end

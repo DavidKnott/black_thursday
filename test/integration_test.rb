@@ -1,100 +1,128 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest/autorun'
+require_relative 'test_helper'
 require './lib/sales_engine'
 require './lib/sales_analyst'
-require 'pry'
 
 class IntegrationTest < Minitest::Test
   attr_reader :se,
               :test_merchant,
-              :test_customer
+              :test_customer,
+              :test_invoice,
+              :test_invoice_failed,
+              :test_transaction
 
   def setup
-    @se = SalesEngine.from_csv({:merchants => "./data/merchants.csv",
-                    :items => "./data/items.csv",
-                    :invoices => "./data/invoices.csv",
-                    :invoice_items => "./data/invoice_items.csv",
-                    :transactions => "./data/transactions.csv",
-                    :customers => "./data/customers.csv"})
-    @test_merchant = se.merchants.find_by_id(12334671)
-    @test_customer = se.customers.find_by_id(40)
+    # test_file_list = {:merchants => "./data/merchants.csv",
+    #                 :items => "./data/items.csv",
+    #                 :invoices => "./data/invoices.csv",
+    #                 :invoice_items => "./data/invoice_items.csv",
+    #                 :transactions => "./data/transactions.csv",
+    #                 :customers => "./data/customers.csv"}
+    test_file_list = {:merchants => "./data/merchants_fixture.csv",
+                    :items => "./data/items_fixture.csv",
+                    :invoices => "./data/invoices_fixture.csv",
+                    :invoice_items => "./data/invoice_items_fixture.csv",
+                    :transactions => "./data/transactions_fixture.csv",
+                    :customers => "./data/customers_fixture.csv"}
+    @se = SalesEngine.from_csv(test_file_list)
+    @test_merchant = se.find_merchant(12334303)
+    @test_customer = se.find_customer(7)
+    @test_invoice = se.find_invoice(3)
+    @test_invoice_failed = se.find_invoice(8)
+    @test_transaction = se.find_transaction(6)
   end
 
   #START of SalesEngine related tests
 
-  # def test_it_can_find_merchant_from_item
-  #   item = se.items.find_by_id(263405705)
-  #   assert_equal 12334671, item.merchant.id
-  # end
-
-  # def test_it_can_find_items_from_merchant
-  #   test_result = test_merchant.items
-  #   assert_equal Item, test_result.first.class
-  # end
-
-  # def test_it_can_find_invoices_from_merchant
-  #   merchant = se.merchants.find_by_id(12334671)
-  #   assert_equal 207, merchant.invoices.first.id
-  # end
-
-  # def test_it_can_find_invoices_for_merchant
-  #   test_result = test_merchant.invoices
-  #   assert_equal Invoice, test_result.first.class
-  # end
-
-  # def test_find_customer_for_merchant
-  #   test_result = test_merchant.customers
-  #   assert_equal Customer, test_result.first.class
-  # end
-
-  # def test_find_customer_for_merchant
-  #   test_result = test_customer.merchants
-  #   assert_equal Merchant, test_result.first.class
-  # end
-
-  # def test_it_can_find_merchant_from_invoice
-  #   invoice = se.invoices.find_by_id(207)
-  #   assert_equal 12334671, invoice.merchant.id
-  # end
-
-  # def test_it_can_find_invoice_items_from_invoice
-  #   invoice = se.invoices.find_by_id(207)
-  #   assert_equal 4427, invoice.transactions.first.id
-  # end
-
-  # def test_it_can_find_transactions_from_invoice
-  #   invoice = se.invoices.find_by_id(207)
-  #   assert_equal 4427, invoice.transactions.first.id
-  # end
-
-  # def test_it_can_find_customer_from_invoice
-  #   invoice = se.invoices.find_by_id(207)
-  #   assert_equal 40, invoice.customer.id
-  # end
-
-  # def test_it_can_find_invoice_from_transaction
-  #   transaction = se.transactions.find_by_id(207)
-  #   assert_equal 4531, transaction.invoice.id
-  # end
-
-  def test_if_invoice_is_paid_in_full
-    invoice = se.transactions.find_by_id(207).invoice
-    assert invoice.is_paid_in_full?
+#Confirmed to stay here
+  def test_it_can_find_items_from_merchant
+    result = test_merchant.items
+    assert_equal Item, result.first.class
+    assert_equal 6, result.count
+    assert_equal 163399361, result.first.id
+    assert_equal 106339936, result.last.id
   end
 
+#Confirmed to stay here
+  def test_it_can_find_invoices_from_merchant
+    result = test_merchant.invoices
+    assert_equal Invoice, result.first.class
+    assert_equal 6, result.count
+    assert_equal 1, result.first.id
+    assert_equal 12, result.last.id
+  end
+
+#Confirmed to stay here
+  def test_find_customer_for_merchant
+    result = test_merchant.customers
+    assert_equal Customer, result.first.class
+    assert_equal 3, result.count
+    assert_equal 6, result.first.id
+    assert_equal 1, result.last.id
+  end
+
+#Confirmed to stay here
+  def test_find_merchant_for_customer
+    result = test_customer.merchants
+    assert_equal Merchant, result.first.class
+    assert_equal 2, result.count
+    assert_equal 22222222, result.first.id
+    assert_equal 44434165, result.last.id
+  end
+
+#Confirmed to stay here
+  def test_it_can_find_merchant_from_invoice
+    result = test_invoice.merchant
+    assert_equal Merchant, result.class
+    assert_equal 22222222, result.id
+  end
+
+#Confirmed to stay here
+  def test_it_can_find_transactions_from_invoice
+    result = test_invoice.transactions
+    assert_equal Transaction, result.first.class
+    assert_equal 1, result.count
+    assert_equal 7, result.first.id
+    assert_equal 7, result.last.id
+  end
+
+#Confirmed to stay here
+  def test_it_can_find_customer_from_invoice
+    result = test_invoice.customer
+    assert_equal Customer, result.class
+    assert_equal 7, result.id
+  end
+
+#Confirmed to stay here
+  def test_it_can_find_invoice_from_transaction
+    result = test_transaction.invoice
+    assert_equal Invoice, result.class
+    assert_equal 2, result.id
+  end
+
+#Confirmed to stay here
+  def test_if_invoice_is_paid_in_full_success
+    assert test_invoice.is_paid_in_full?
+  end
+
+#Confirmed to stay here
+  def test_if_invoice_is_paid_in_full_failed
+    refute test_invoice_failed.is_paid_in_full?
+  end
+
+#Confirmed to stay here
+  def test_it_can_find_items_related_to_invoice
+    result = test_invoice.items
+    assert_equal Item, result.first.class
+    assert_equal 2, result.count
+    assert_equal 463399361, result.first.id
+    assert_equal 563399361, result.last.id
+  end
 
   #END of SalesEngine related tests
 
   #START of SalesAnalyst related tests
 
-  def test_average_average_price_per_merchant
-    # se = SalesEngine.from_csv({:items => "./data/items.csv", 
-    #                             :merchants => "./data/merchants.csv"})
-    sales_analyst = SalesAnalyst.new(se)
 
-    assert_equal 350.29, sales_analyst.average_average_price_per_merchant.round(2).to_f
-  end
   
   #END of SalesAnalyst related tests
 

@@ -2,9 +2,11 @@ require 'bigdecimal'
 require 'time'
 require_relative 'calculator'
 
+#Store details of a single Invoice Item
 class InvoiceItem
   include Calculator
-  PRICE_ADJUSTER = 100
+
+  CENT_TO_DOLLAR = 100
 
   attr_reader       :id,
                     :item_id,
@@ -21,7 +23,7 @@ class InvoiceItem
     @item_id = invoice_item_info[:item_id].to_i
     @invoice_id = invoice_item_info[:invoice_id].to_i
     @quantity = invoice_item_info[:quantity].to_i
-    @unit_price = BigDecimal(invoice_item_info[:unit_price])/PRICE_ADJUSTER
+    @unit_price = BigDecimal(invoice_item_info[:unit_price])/CENT_TO_DOLLAR
     @created_at = Time.parse(invoice_item_info[:created_at])
     @updated_at = Time.parse(invoice_item_info[:updated_at])
   end

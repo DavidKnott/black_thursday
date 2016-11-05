@@ -1,7 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'pry'
-require 'minitest/autorun'
+require_relative 'test_helper'
 require './lib/calculator'
 
 class CalculatorTest < Minitest::Test
@@ -83,15 +80,13 @@ class CalculatorTest < Minitest::Test
 
   def test_weekday
     assert_equal "Sunday", weekday(0)
-    assert_equal "Friday", weekday(5)
     refute_equal "Tuesday", weekday(4)
+    assert_nil weekday(7)
   end
 
   def test_percentage
     assert_equal 20, percentage(5, 25)
     assert_equal 68.52, percentage(37, 54)
-    assert_equal 0, percentage(0, 124)
-    assert_equal 71.11, percentage(32, 45)
   end
 
 end

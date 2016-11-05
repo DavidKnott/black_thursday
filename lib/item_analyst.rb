@@ -1,6 +1,8 @@
 require_relative 'calculator'
 
-module SaItem
+#Colection of methods used for Item related
+#sales analysis within sales_analyst
+module ItemAnalyst
   include Calculator
 
   def items_list
@@ -9,6 +11,8 @@ module SaItem
 
   def total_items
     sales_engine.items_count
+    #This method could be eliminated from sales_engine!!!
+    # sales_engine.items_count
   end
 
   def items_unit_price_list(merchant_items = nil)

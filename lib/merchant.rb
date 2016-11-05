@@ -1,3 +1,4 @@
+#Storing details of a single merchant
 class Merchant
 
   attr_reader   :id,
@@ -10,22 +11,28 @@ class Merchant
     @parent = parent
   end
 
+  #Tested through Mock
   def items
-    parent.find_items_by_merchant_id(id)
+    parent.find_items(id)
   end
 
+  #Tested through Mock
   def invoices
-    parent.find_invoices_by_merchant_id(id)
+    parent.find_invoices(id)
   end
 
-  def customers
-    customer_id_list = invoices.map do |invoice|
+  #Tested through INTEGRATION TEST
+  def customer_ids
+    invoices.map do |invoice|
       invoice.customer_id
     end.uniq
-    customer_list = customer_id_list.map do |customer_id|
+  end
+
+  #Tested through INTEGRATION TEST
+  def customers
+    customer_ids.map do |customer_id|
       parent.find_customer(customer_id)
     end
-    return customer_list
   end
 
 end

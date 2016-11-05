@@ -1,6 +1,7 @@
 require 'csv'
 require_relative 'invoice_item'
 
+#Collection of all InvoiceItem instances
 class InvoiceItemRepository
 
   attr_reader     :invoice_items_list,
@@ -11,7 +12,7 @@ class InvoiceItemRepository
 
   def initialize(file_path, parent)
     @parent = parent
-    @invoice_items_list = [] 
+    @invoice_items_list = []
     load_invoice_items(file_path)
   end
 
@@ -44,7 +45,5 @@ class InvoiceItemRepository
       invoice_item.invoice_id == invoice_id
     end
   end
-
-  
 
 end
