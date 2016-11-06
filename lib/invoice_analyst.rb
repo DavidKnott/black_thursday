@@ -5,6 +5,10 @@ require_relative 'calculator'
 module InvoiceAnalyst
   include Calculator
 
+  def find_invoice(invoice_id)
+    sales_engine.find_invoice(invoice_id)
+  end
+
   def invoices_list
     sales_engine.invoices_list
   end

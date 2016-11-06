@@ -91,7 +91,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_all_method_on_csv_with_one_merchant
-    assert_equal 3, test_merchant_repo.all.count
+    assert_equal 4, test_merchant_repo.all.count
   end
 
   def test_all_method_on_merchant_all_details_id
@@ -125,7 +125,7 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_find_all_by_name_is_in_merchant_list
     assert_equal 22222222, test_merchant_repo.find_all_by_name("ERC").first.id
-    assert_equal "MerchantName44434165", test_merchant_repo.find_all_by_name("hANTn").last.name
+    assert_equal "MerchantName11111111", test_merchant_repo.find_all_by_name("hANTn").last.name
   end
 
 end

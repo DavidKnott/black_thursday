@@ -14,15 +14,18 @@ class SalesAnalystTest < MiniTest::Test
     #                   :invoices => "./data/invoices.csv"}
     test_file_list = {:merchants => "./data/merchants_fixture.csv",
                       :items => "./data/items_fixture.csv",
-                      :invoices => "./data/invoices_fixture.csv"}
+                      :invoices => "./data/invoices_fixture.csv",
+                      :invoice_items => "./data/invoice_items_fixture.csv",
+                      :transactions => "./data/transactions_fixture.csv",
+                      :customers => "./data/customers_fixture.csv"}
     sales_engine = SalesEngine.from_csv(test_file_list)
     @sales_analyst = SalesAnalyst.new(sales_engine)
 
-    test_small_file_list = {:merchants => "./data/merchants.csv",
+    test_full_file_list = {:merchants => "./data/merchants.csv",
                             :items => "./data/items.csv",
                             :invoices => "./data/invoices.csv"}
-    sales_engine_small = SalesEngine.from_csv(test_small_file_list)
-    @sales_analyst_full = SalesAnalyst.new(sales_engine_small)    
+    sales_engine_full = SalesEngine.from_csv(test_full_file_list)
+    @sales_analyst_full = SalesAnalyst.new(sales_engine_full)    
   end
 
   # def test_it_exists
@@ -166,17 +169,17 @@ class SalesAnalystTest < MiniTest::Test
 
 #done
   def test_it_returns_merchants_list
-    assert_equal 3, sales_analyst.merchants_list.length
+    assert_equal 4, sales_analyst.merchants_list.length
   end
 
 #done
   def test_it_returns_items_list
-    assert_equal 10, sales_analyst.items_list.length
+    assert_equal 11, sales_analyst.items_list.length
   end
 
 #done
   def test_it_finds_average_items_per_merchant
-    assert_equal 3.33, sales_analyst.average_items_per_merchant
+    assert_equal 2.75, sales_analyst.average_items_per_merchant
   end
 
 #done
@@ -187,12 +190,12 @@ class SalesAnalystTest < MiniTest::Test
 #done
   def test_it_makes_array_for_how_many_items_each_merchant_has
     result = sales_analyst.items_per_merchant_list
-    assert_equal [2, 6, 2], result
+    assert_equal [2, 6, 2, 1], result
   end
 
 #done
   def test_it_finds_average_items_per_merchant_standard_deviation
-    assert_equal 2.31, sales_analyst.average_items_per_merchant_standard_deviation
+    assert_equal 2.22, sales_analyst.average_items_per_merchant_standard_deviation
   end
 
 #done
@@ -212,7 +215,7 @@ class SalesAnalystTest < MiniTest::Test
   def test_average_average_price_per_merchant
     #Based on fixture files: [4.13, 7.13, 8.75]
     result = sales_analyst.average_average_price_per_merchant
-    assert_equal 6.67, result.to_f
+    assert_equal 7.37, result.to_f
   end
 
 #done
@@ -232,13 +235,13 @@ class SalesAnalystTest < MiniTest::Test
   def test_average_invoices_per_merchant
     #Based on fixture files [3, 6, 3]
     result = sales_analyst.average_invoices_per_merchant
-    assert_equal 4, result
+    assert_equal 3, result
   end
 
 #done
   def test_average_invoices_per_merchant_standard_deviation
     result = sales_analyst.average_invoices_per_merchant_standard_deviation
-    assert_equal 1.73, result
+    assert_equal 2.45, result
   end
 
 #done
@@ -283,4 +286,63 @@ class SalesAnalystTest < MiniTest::Test
     assert_equal 99.99, result_pending + result_returned + result_shipped
   end
 
+  def test_finds_total_revenue_of_merchant
+    actual = sales_analyst.revenue_by_merchant(22222222)
+    assert_equal BigDecimal, actual.class
+    assert_equal 452.85, actual
+  end
+
+  def test_finds_most_sold_item_for_merchant
+    actual = sales_analyst.most_sold_item_for_merchant(22222222)
+    assert_equal Item, actual.first.class
+    assert_equal 2, actual.count
+  end
+
+  def test_finds_best_item_for_merchant
+    actual = sales_analyst.best_item_for_merchant(22222222)
+    assert_equal Item, actual.class
+    assert_equal 563399361, actual.id
+  end
+
+  #what we think is right
+  # def test_finds_total_revenue_by_date
+  #   actual = @sales_analyst.total_revenue_by_date(Time.parse("2012-02-26"))
+  #   assert_equal BigDecimal, actual.class
+  #   assert_equal 619.7, actual
+  # end
+
+  def test_finds_total_revenue_by_date
+    actual = sales_analyst.total_revenue_by_date(Time.parse("2009-01-07"))
+    assert_equal BigDecimal, actual.class
+    assert_equal 32, actual
+  end
+
+  def test_finds_total_revenue_by_date_as_zero
+    actual = sales_analyst.total_revenue_by_date(Time.parse("2012-02-24"))
+    assert_equal 0, actual
+  end
+
+  def test_finds_top_revenue_earners
+    actual = sales_analyst.top_revenue_earners(10)
+    assert_equal Merchant, actual.first.class
+    assert_equal 4, actual.count
+  end
+
+  def test_finds_merchants_with_pending_invoices
+    actual = sales_analyst.merchants_with_pending_invoices
+    assert_equal Merchant, actual.first.class
+    assert_equal 3, actual.count
+  end
+
+  def test_finds_merchants_with_only_one_item
+    actual = sales_analyst.merchants_with_only_one_item
+    assert_equal Merchant, actual.first.class
+    assert_equal 1, actual.count
+  end
+
+  def test_merchants_with_only_one_item_registered_in_month
+    actual = sales_analyst.merchants_with_only_one_item_registered_in_month("May")
+    assert_equal Merchant, actual.first.class
+    assert_equal 1, actual.count
+  end
 end

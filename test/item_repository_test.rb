@@ -107,7 +107,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_all_method_returns_all_items
-    assert_equal 10, test_item_repo.count_all
+    assert_equal 11, test_item_repo.count_all
   end
 
   def test_finds_item_by_id
@@ -155,8 +155,8 @@ class ItemRepositoryTest < Minitest::Test
   def test_finds_all_prices_in_given_range
     result = test_item_repo.find_all_by_price_in_range(2.50..9.99)
     assert_equal Item, result.first.class
-    assert_equal 7, result.count
-    assert_equal 106339936, result.last.id
+    assert_equal 8, result.count
+    assert_equal 112687325, result.last.id
   end
 
   def test_returns_empty_array_if_no_items_match_given_price_range

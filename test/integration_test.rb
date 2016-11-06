@@ -113,7 +113,7 @@ class IntegrationTest < Minitest::Test
   def test_it_can_find_items_related_to_invoice
     result = test_invoice.items
     assert_equal Item, result.first.class
-    assert_equal 2, result.count
+    assert_equal 3, result.count
     assert_equal 463399361, result.first.id
     assert_equal 563399361, result.last.id
   end

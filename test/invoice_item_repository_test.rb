@@ -59,7 +59,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
   def test_all_method_returns_all_invoice_items
     result = test_invoice_item_repo.all
     assert_equal InvoiceItem, result.first.class
-    assert_equal 9, result.count
+    assert_equal 10, result.count
   end
 
   def test_finds_invoice_item_by_id
@@ -88,7 +88,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
   def test_finds_all_invoices_with_given_invoice_by_id
     result = test_invoice_item_repo.find_all_by_invoice_id(3)
     assert_equal InvoiceItem, result.first.class
-    assert_equal 2, result.count
+    assert_equal 3, result.count
     assert_equal 3, result.first.id
     assert_equal 563399361, result.last.item_id
   end

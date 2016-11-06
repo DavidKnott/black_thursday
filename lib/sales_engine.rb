@@ -4,6 +4,7 @@ require_relative 'invoice_repository'
 require_relative 'invoice_item_repository'
 require_relative 'transaction_repository'
 require_relative 'customer_repository'
+require 'pry'
 
 #Support for Sales Analyst layer, connecting Sales Analyst and
 #various repositories with each other
@@ -123,6 +124,10 @@ class SalesEngine
 
   def invoices_count
     invoices.count_all
+  end
+
+  def transactions_list
+    transactions.all
   end
 
 end
