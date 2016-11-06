@@ -287,19 +287,19 @@ class SalesAnalystTest < MiniTest::Test
   end
 
   def test_finds_total_revenue_of_merchant
-    actual = @sales_analyst.revenue_by_merchant(22222222)
+    actual = sales_analyst.revenue_by_merchant(22222222)
     assert_equal BigDecimal, actual.class
     assert_equal 452.85, actual
   end
 
   def test_finds_most_sold_item_for_merchant
-    actual = @sales_analyst.most_sold_item_for_merchant(22222222)
+    actual = sales_analyst.most_sold_item_for_merchant(22222222)
     assert_equal Item, actual.first.class
     assert_equal 2, actual.count
   end
 
   def test_finds_best_item_for_merchant
-    actual = @sales_analyst.best_item_for_merchant(22222222)
+    actual = sales_analyst.best_item_for_merchant(22222222)
     assert_equal Item, actual.class
     assert_equal 563399361, actual.id
   end
@@ -312,36 +312,36 @@ class SalesAnalystTest < MiniTest::Test
   # end
 
   def test_finds_total_revenue_by_date
-    actual = @sales_analyst.total_revenue_by_date(Time.parse("2009-01-07"))
+    actual = sales_analyst.total_revenue_by_date(Time.parse("2009-01-07"))
     assert_equal BigDecimal, actual.class
     assert_equal 32, actual
   end
 
   def test_finds_total_revenue_by_date_as_zero
-    actual = @sales_analyst.total_revenue_by_date(Time.parse("2012-02-24"))
+    actual = sales_analyst.total_revenue_by_date(Time.parse("2012-02-24"))
     assert_equal 0, actual
   end
 
   def test_finds_top_revenue_earners
-    actual = @sales_analyst.top_revenue_earners(10)
+    actual = sales_analyst.top_revenue_earners(10)
     assert_equal Merchant, actual.first.class
     assert_equal 4, actual.count
   end
 
   def test_finds_merchants_with_pending_invoices
-    actual = @sales_analyst.merchants_with_pending_invoices
+    actual = sales_analyst.merchants_with_pending_invoices
     assert_equal Merchant, actual.first.class
     assert_equal 3, actual.count
   end
 
   def test_finds_merchants_with_only_one_item
-    actual = @sales_analyst.merchants_with_only_one_item
+    actual = sales_analyst.merchants_with_only_one_item
     assert_equal Merchant, actual.first.class
     assert_equal 1, actual.count
   end
 
   def test_merchants_with_only_one_item_registered_in_month
-    actual = @sales_analyst.merchants_with_only_one_item_registered_in_month("May")
+    actual = sales_analyst.merchants_with_only_one_item_registered_in_month("May")
     assert_equal Merchant, actual.first.class
     assert_equal 1, actual.count
   end
