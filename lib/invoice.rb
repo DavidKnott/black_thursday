@@ -58,7 +58,7 @@ attr_reader     :id,
 
   #Testing through INTEGRATION TEST
   def total
-    return nil unless is_paid_in_full?
+    return 0 unless is_paid_in_full?
     invoice_items.reduce(0) do |invoice_total, invoice_item|
       invoice_total += invoice_item.quantity * invoice_item.unit_price
       invoice_total

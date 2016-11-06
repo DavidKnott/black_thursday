@@ -1,13 +1,16 @@
 #Storing details of a single merchant
+require 'time'
 class Merchant
 
   attr_reader   :id,
                 :name,
+                :created_at,
                 :parent
 
   def initialize(merchant_info, parent)
     @id = merchant_info[:id].to_i
     @name = merchant_info[:name]
+    @created_at = Time.parse(merchant_info[:created_at])
     @parent = parent
   end
 
