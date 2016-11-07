@@ -304,13 +304,6 @@ class SalesAnalystTest < MiniTest::Test
     assert_equal 563399361, actual.id
   end
 
-  #what we think is right
-  # def test_finds_total_revenue_by_date
-  #   actual = @sales_analyst.total_revenue_by_date(Time.parse("2012-02-26"))
-  #   assert_equal BigDecimal, actual.class
-  #   assert_equal 619.7, actual
-  # end
-
   def test_finds_total_revenue_by_date
     actual = sales_analyst.total_revenue_by_date(Time.parse("2009-01-07"))
     assert_equal BigDecimal, actual.class
@@ -344,5 +337,11 @@ class SalesAnalystTest < MiniTest::Test
     actual = sales_analyst.merchants_with_only_one_item_registered_in_month("May")
     assert_equal Merchant, actual.first.class
     assert_equal 1, actual.count
+  end
+
+  def test_merchants_ranked_by_revenue
+    actual = sales_analyst.merchants_ranked_by_revenue
+    assert_equal Merchant, actual.first.class
+    assert_equal 4, actual.count
   end
 end

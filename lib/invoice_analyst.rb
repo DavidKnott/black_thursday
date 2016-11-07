@@ -3,12 +3,8 @@ require_relative 'calculator'
 #Colection of methods used for Invoice related
 #sales analysis within sales_analyst
 module InvoiceAnalyst
-  include Calculator
-
-  def find_invoice(invoice_id)
-    sales_engine.find_invoice(invoice_id)
-  end
-
+  include calculator
+  
   def invoices_list
     sales_engine.invoices_list
   end

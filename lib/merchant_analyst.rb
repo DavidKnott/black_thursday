@@ -10,18 +10,12 @@ module MerchantAnalyst
     sales_engine.merchants_list
   end
 
-  def transactions_list
-    sales_engine.transactions_list
-  end
-
   def average_items_per_merchant
     bigdecimal_to_float(average(total_items, total_merchants))
   end
 
   def total_merchants
-    merchants_list.count
-    #We can eliminate the below method from sales_engine!!!
-    # sales_engine.merchants_count
+    sales_engine.merchants_count
   end
 
   def average_items_per_merchant_standard_deviation
@@ -82,16 +76,23 @@ module MerchantAnalyst
 
   def most_sold_item_for_merchant(merchant_id)
     invoices = find_invoices(merchant_id)
-    quantity_list = list_of_invoice_items_with_quantity(invoices)
-    highest_items = quantity_list.find_all do |elem|
+    quantity_list = invoice_items_with_quantity(invoices)
+    ids_to_items(collect_highest(quantity_list))
+  end
+
+  def collect_highest(quantity_list)
+    quantity_list.find_all do |elem|
       elem.last == quantity_list.values.max
     end
-    highest_items.map do |elem|
+  end
+
+  def ids_to_items(list)
+    list.map do |elem|
       find_item(elem.first)
     end
   end
 
-  def list_of_invoice_items_with_quantity(invoices)
+  def invoice_items_with_quantity(invoices)
     quantity_list = Hash.new(0)
     invoices.each do |invoice|
       invoice.invoice_items.each do |invoice_item|
@@ -103,12 +104,10 @@ module MerchantAnalyst
 
   def invoice_items_with_total_unit_price(invoices)
     quantity_list = Hash.new(0)
-    invoices.each do |invoice|
-      if invoice.is_paid_in_full?
-        invoice.invoice_items.each do |item|
-          quantity_list[item.item_id] += item.quantity * item.unit_price
-        end
-      end
+    invoices.map do |invoice|
+      invoice.invoice_items.map do |item|
+        quantity_list[item.item_id] += item.quantity * item.unit_price
+      end if invoice.is_paid_in_full?
     end
     quantity_list
   end
@@ -123,17 +122,6 @@ module MerchantAnalyst
     end.first
   end
 
-  #correct_way_to_find_total_revenue_by_date
-  # transactions_list_on_date = transactions_list.find_all do |transaction|
-    #   transaction.result == "success" &&  (transaction.updated_at.strftime("%Y-%m-%d") == date.strftime("%Y-%m-%d"))
-    # end
-    # return BigDecimal.new("0") unless transactions_list_on_date
-    # transactions_list_on_date.inject(0) do |total, transaction|
-    #   invoice = find_invoice(transaction.invoice_id)
-    #   total += invoice.total
-    #   total
-    # end
-
   def total_revenue_by_date(date)
     invoices_list.inject(0) do |total, invoice|
       if invoice.created_at.strftime("%Y-%m-%d") == date.strftime("%Y-%m-%d")
@@ -143,16 +131,16 @@ module MerchantAnalyst
     end
   end
 
+  def merchants_revenue
+    merchants_list.map do |merchant|
+      [[revenue_by_merchant(merchant.id)] , merchant]
+    end.sort.reverse
+  end
+
   def top_revenue_earners(top_list = 20)
-  list = []
-    merchants_list.each do |merchant|
-      list << [[revenue_by_merchant(merchant.id)] , merchant]
-    end
-    list = list.sort.reverse
-    list = list.map do |elem|
+    merchants_revenue.map do |elem|
       elem.last
-    end
-    list[0...top_list]
+    end[0...top_list]
   end
 
   def merchants_with_pending_invoices
@@ -173,5 +161,9 @@ module MerchantAnalyst
         merchant.created_at.mon == Time.parse(month).mon
       end
     end
+  end
+
+  def merchants_ranked_by_revenue
+    top_revenue_earners(total_merchants)
   end
 end
