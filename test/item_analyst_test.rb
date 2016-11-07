@@ -3,7 +3,7 @@ require './lib/sales_analyst'
 require './lib/sales_engine'
 
 
-class SalesAnalystTest < MiniTest::Test
+class ItemAnalystTest < MiniTest::Test
 
   attr_reader     :sales_analyst,
                   :sales_analyst_full
@@ -25,8 +25,22 @@ class SalesAnalystTest < MiniTest::Test
     @sales_analyst_full = SalesAnalyst.new(sales_engine_full)    
   end
 
-  def test_it_exists
-    assert sales_analyst
+
+  def test_it_returns_items_list
+    assert_equal 11, sales_analyst.items_list.length
   end
+
+  def test_golden_items
+    #Based on Fixture files:
+    #Item priced: [3,4.15,5,10,20,3.25,2,4.15,7.5,9.45]
+    #Average: 6.85
+    #Std_dev: 5.36796
+    result = sales_analyst.golden_items
+    assert_equal Item, result.first.class
+    assert_equal 563399361, result.first.id
+    assert_equal "Item name for 563399361", result.first.name
+    assert_equal BigDecimal("20.00"), result.first.unit_price
+  end
+
   
 end
