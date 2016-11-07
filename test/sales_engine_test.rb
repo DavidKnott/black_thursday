@@ -8,12 +8,6 @@ class SalesEngineTest < Minitest::Test
                 :test_magic_file_list
 
   def setup
-    # test_file_list = {:merchants => "./data/merchants.csv",
-    #                 :items => "./data/items.csv",
-    #                 :invoices => "./data/invoices.csv",
-    #                 :invoice_items => "./data/invoice_items.csv",
-    #                 :transactions => "./data/transactions.csv",
-    #                 :customers => "./data/customers.csv"}
     test_file_list = {:merchants => "./data/merchants_fixture.csv",
                     :items => "./data/items_fixture.csv",
                     :invoices => "./data/invoices_fixture.csv",
@@ -59,41 +53,10 @@ class SalesEngineTest < Minitest::Test
     assert se.customers
   end
 
-  # def test_it_calls_merchant_repo_and_finds_merchants_by_merchant_id
-  #   assert_equal 12334159, se.find_merchant(12334159).id
-  # end
-
-  # def test_it_calls_item_repo_and_finds_items_by_merchant_id
-  #   assert_equal 263453479,se.find_items(12334159).first.id
-  # end
-
-  # def test_it_calls_invoice_repo_and_finds_invoices_by_merchant_id
-  #   assert_equal 234, se.find_invoices(12334159).first.id
-  # end
-
-  # def test_it_calls_items_repo_and_finds_items_by_invoice_id
-  #   assert_equal 27, se.find_invoice_items(6).first.id
-  # end
-
-  # def test_it_calls_transaction_repo_and_finds_transactions_by_invoice_id
-  #   assert_equal 2871,se.find_transactions(6).first.id
-  # end
-
-  # def test_it_calls_customer_repo_and_finds_customer_by_merchant_id
-  #   assert_equal 26,se.find_customer(26).id
-  # end
-
-  # def test_it_calls_invoice_repo_and_finds_invoice_by_invoice_id
-  #   assert_equal 26,se.find_invoice(26).id
-  # end
-
-
-#Tests using TEST FIXTURES
   def test_it_calls_merchant_repo_and_finds_merchants_by_merchant_id
     assert_equal "MerchantName12334303", se.find_merchant(12334303).name
   end
 
-#NEW-DONE
   def test_it_calls_items_repo_and_finds_merchant_of_item
     result = se.find_item(663399361)
     assert_equal 22222222, result.merchant_id
