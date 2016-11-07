@@ -80,24 +80,37 @@ module MerchantAnalyst
     bigdecimal_round(revenue)
   end
 
-  def most_sold_item_for_merchant(merchant_id)
-    invoices = find_invoices(merchant_id)
-    quantity_list = list_of_invoice_items_with_quantity(invoices)
-    highest_items = quantity_list.find_all {|elem| elem.last == quantity_list.values.max}
-    highest_items.map do |elem|
+  def collect_highest(quantity_list)
+    quantity_list.find_all do |elem|
+      elem.last == quantity_list.values.max
+    end
+  end
+
+  def ids_to_items(list)
+    list.map do |elem|
       find_item(elem.first)
     end
   end
 
-  def list_of_invoice_items_with_quantity(invoices)
+  def most_sold_item_for_merchant(merchant_id)
+    invoices = find_invoices(merchant_id)
+    quantity_list = invoice_items_with_quantity(invoices) 
+    ids_to_items(collect_highest(quantity_list))
+  end
+
+  def all_item_count(invoices,)
     quantity_list = {}
     invoices.each do |invoice|
       invoice.invoice_items.each do |invoice_item|
-          next quantity_list[invoice_item.item_id] += invoice_item.quantity if quantity_list[invoice_item.item_id]
-            quantity_list[invoice_item.item_id] = invoice_item.quantity
+        next quantity_list[invoice_item.item_id] += invoice_item.quantity if quantity_list[invoice_item.item_id]
+        quantity_list[invoice_item.item_id] = invoice_item.quantity
       end if invoice.is_paid_in_full?
     end
     quantity_list
+  end
+
+  def invoice_items_with_quantity(invoices)
+      all_item_count(invoices) 
   end
 
   def list_of_invoice_items_with_total_unit_price(invoices)
@@ -130,7 +143,7 @@ module MerchantAnalyst
     #   total += invoice.total
     #   total
     # end
-    
+
   def total_revenue_by_date(date)
     invoices_list.inject(0) do |total, invoice|
       if invoice.created_at.strftime("%Y-%m-%d") == date.strftime("%Y-%m-%d")
@@ -140,16 +153,16 @@ module MerchantAnalyst
     end
   end
 
+  def merchants_revenue
+    merchants_list.map do |merchant|
+      [[revenue_by_merchant(merchant.id)] , merchant]
+    end.sort.reverse
+  end
+
   def top_revenue_earners(top_list = 20)
-  list = []
-    merchants_list.each do |merchant|
-      list << [[revenue_by_merchant(merchant.id)] , merchant]
-    end
-    list = list.sort.reverse
-    list = list.map do |elem|
+    merchants_revenue.map do |elem|
       elem.last
-    end
-    list[0...top_list]
+    end[0...top_list]
   end
 
   def merchants_with_pending_invoices
@@ -168,5 +181,9 @@ module MerchantAnalyst
     merchants_list.find_all do |merchant|
       merchant.items.one? {|item| merchant.created_at.mon == Time.parse(month).mon }
     end
+  end
+
+  def merchants_ranked_by_revenue
+    top_revenue_earners(total_merchants)
   end
 end
