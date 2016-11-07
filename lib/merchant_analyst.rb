@@ -83,38 +83,41 @@ module MerchantAnalyst
   def most_sold_item_for_merchant(merchant_id)
     invoices = find_invoices(merchant_id)
     quantity_list = list_of_invoice_items_with_quantity(invoices)
-    highest_items = quantity_list.find_all {|elem| elem.last == quantity_list.values.max}
+    highest_items = quantity_list.find_all do |elem|
+      elem.last == quantity_list.values.max
+    end
     highest_items.map do |elem|
       find_item(elem.first)
     end
   end
 
   def list_of_invoice_items_with_quantity(invoices)
-    quantity_list = {}
+    quantity_list = Hash.new(0)
     invoices.each do |invoice|
       invoice.invoice_items.each do |invoice_item|
-          next quantity_list[invoice_item.item_id] += invoice_item.quantity if quantity_list[invoice_item.item_id]
-            quantity_list[invoice_item.item_id] = invoice_item.quantity
+        quantity_list[invoice_item.item_id] += invoice_item.quantity
       end if invoice.is_paid_in_full?
     end
     quantity_list
   end
 
-  def list_of_invoice_items_with_total_unit_price(invoices)
-    quantity_list = {}
+  def invoice_items_with_total_unit_price(invoices)
+    quantity_list = Hash.new(0)
     invoices.each do |invoice|
-      invoice.invoice_items.each do |invoice_item|
-          next quantity_list[invoice_item.item_id] += invoice_item.quantity * invoice_item.unit_price if quantity_list[invoice_item.item_id]
-            quantity_list[invoice_item.item_id] = invoice_item.quantity * invoice_item.unit_price
-      end if invoice.is_paid_in_full?
+      if invoice.is_paid_in_full?
+        invoice.invoice_items.each do |item|
+          quantity_list[item.item_id] += item.quantity * item.unit_price
+        end
+      end
     end
     quantity_list
   end
 
   def best_item_for_merchant(merchant_id)
     invoices = find_invoices(merchant_id)
-    total_unit_price_list = list_of_invoice_items_with_total_unit_price(invoices)
-    highest_items = total_unit_price_list.find_all {|elem| elem.last == total_unit_price_list.values.max}
+    unit_price_list = invoice_items_with_total_unit_price(invoices)
+    max = unit_price_list.values.max
+    highest_items = unit_price_list.find_all {|elem| elem.last == max}
     highest_items.map do |elem|
       find_item(elem.first)
     end.first
@@ -130,7 +133,7 @@ module MerchantAnalyst
     #   total += invoice.total
     #   total
     # end
-    
+
   def total_revenue_by_date(date)
     invoices_list.inject(0) do |total, invoice|
       if invoice.created_at.strftime("%Y-%m-%d") == date.strftime("%Y-%m-%d")
@@ -166,7 +169,9 @@ module MerchantAnalyst
 
   def merchants_with_only_one_item_registered_in_month(month)
     merchants_list.find_all do |merchant|
-      merchant.items.one? {|item| merchant.created_at.mon == Time.parse(month).mon }
+      merchant.items.one? do |item|
+        merchant.created_at.mon == Time.parse(month).mon
+      end
     end
   end
 end
