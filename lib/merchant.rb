@@ -1,5 +1,5 @@
-#Storing details of a single merchant
 require 'time'
+#Storing details of a single merchant
 class Merchant
 
   attr_reader   :id,
