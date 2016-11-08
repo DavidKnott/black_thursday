@@ -61,7 +61,7 @@ module MerchantAnalyst
   def average_item_price_for_merchant(merchant_id)
     merchant = find_merchant(merchant_id)
     merchant_items = merchant.items
-    return rounding(0) if merchant_items.empty? 
+    return rounding(0) if merchant_items.empty?
     rounding(list_average(items_unit_price_list(merchant_items)))
   end
 
