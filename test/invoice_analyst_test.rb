@@ -28,12 +28,12 @@ class InvoiceAnalystTest < MiniTest::Test
 
   def test_average_invoices_per_merchant
     result = sales_analyst.average_invoices_per_merchant
-    assert_equal 3, result
+    assert_equal 2.4, result
   end
 
   def test_average_invoices_per_merchant_standard_deviation
     result = sales_analyst.average_invoices_per_merchant_standard_deviation
-    assert_equal 2.45, result
+    assert_equal 2.51, result
   end
 
   def test_top_merchants_by_invoice_count

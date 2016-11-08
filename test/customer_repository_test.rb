@@ -11,7 +11,7 @@ class CustomerRepositoryTest < Minitest::Test
     @customers_list = test_customer_repo.customers_list
   end
 
-  def test_initialize_invoiceitem_repository
+  def test_initialize_customer_repository
     assert test_customer_repo
   end
 
@@ -23,14 +23,19 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal Customer, customers_list.first.class
   end
 
-  def test_all_method_returns_all_transactions
+  def test_all_method_returns_all_customers
     result = test_customer_repo.all
     assert_equal 9, result.length
   end
 
-  def test_finds_customer_by_id
+  def test_finds_customer_by_id_in_repository
     result = test_customer_repo.find_by_id(5)
     assert_equal "FirstName5", result.first_name
+  end
+
+  def test_finds_customer_by_id_not_in_repository
+    result = test_customer_repo.find_by_id(99)
+    assert_nil result
   end
 
   def test_finds_all_by_first_name

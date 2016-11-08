@@ -20,7 +20,7 @@ module InvoiceAnalyst
 
   def average_invoices_per_merchant
     invoice_count_list = build_invoice_count_list
-    bigdecimal_to_float(list_average(invoice_count_list))
+    simple_rounding(list_average(invoice_count_list))
   end
 
   def average_invoices_per_merchant_standard_deviation

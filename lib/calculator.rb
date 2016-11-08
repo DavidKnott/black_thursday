@@ -28,11 +28,11 @@ module Calculator
     Math.sqrt(total).round(2)
   end
 
-  def bigdecimal_to_float(input)
+  def simple_rounding(input)
     input.round(2).to_f
   end
 
-  def bigdecimal_round(input)
+  def rounding(input)
     input.round(2)
   end
 
@@ -42,7 +42,7 @@ module Calculator
 
   def percentage(fraction, total)
     result = BigDecimal(fraction) / BigDecimal(total) * 100
-    bigdecimal_to_float(result)
+    simple_rounding(result)
   end
 
 end
