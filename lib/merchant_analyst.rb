@@ -1,5 +1,4 @@
 require_relative 'calculator'
-require 'pry'
 
 #Colection of methods used for Merchant related
 #sales analysis within sales_analyst
@@ -11,7 +10,7 @@ module MerchantAnalyst
   end
 
   def average_items_per_merchant
-    bigdecimal_to_float(average(total_items, total_merchants))
+    simple_rounding(average(total_items, total_merchants))
   end
 
   def total_merchants
@@ -45,24 +44,29 @@ module MerchantAnalyst
     merchant.items.length
   end
 
+  def item_count_filter(merchants_list, threshold)
+    merchants_list.find_all do |merchant|
+      merchant if items_count(merchant.id) > threshold
+    end
+  end
+
   def merchants_with_high_item_count
     items_average = average_items_per_merchant
     items_std_dev = average_items_per_merchant_standard_deviation
-    merchants_list.find_all do |merchant|
-      merchant if items_count(merchant.id) > items_average + items_std_dev
-    end
+    threshold = items_average + items_std_dev
+    item_count_filter(merchants_list, threshold)
   end
 
   def average_item_price_for_merchant(merchant_id)
     merchant = find_merchant(merchant_id)
-    bigdecimal_round(list_average(items_unit_price_list(merchant.items)))
+    rounding(list_average(items_unit_price_list(merchant.items)))
   end
 
   def average_average_price_per_merchant
     all_merchants = merchants_list.map do |merchant|
       average_item_price_for_merchant(merchant.id)
     end
-    bigdecimal_round(list_average(all_merchants))
+    rounding(list_average(all_merchants))
   end
 
   def revenue_by_merchant(merchant_id)
@@ -71,7 +75,7 @@ module MerchantAnalyst
       total += invoice.total
       total
     end
-    bigdecimal_round(revenue)
+    rounding(revenue)
   end
 
   def most_sold_item_for_merchant(merchant_id)
@@ -112,14 +116,22 @@ module MerchantAnalyst
     quantity_list
   end
 
+  def highest_invoice_total(unit_price_list, max)
+    unit_price_list.find_all do |invoice_total|
+      invoice_total.last == max
+    end
+  end
+
+  def highest_total_invoice_items(unit_price_list, max)
+    highest_invoice_total(unit_price_list, max).map do |invoice_total|
+      find_item(invoice_total.first)
+    end.first
+  end
+
   def best_item_for_merchant(merchant_id)
     invoices = find_invoices(merchant_id)
     unit_price_list = invoice_items_with_total_unit_price(invoices)
-    max = unit_price_list.values.max
-    highest_items = unit_price_list.find_all {|elem| elem.last == max}
-    highest_items.map do |elem|
-      find_item(elem.first)
-    end.first
+    highest_total_invoice_items(unit_price_list, unit_price_list.values.max)
   end
 
   def total_revenue_by_date(date)
@@ -133,7 +145,7 @@ module MerchantAnalyst
 
   def merchants_revenue
     merchants_list.map do |merchant|
-      [[revenue_by_merchant(merchant.id)] , merchant]
+      [[revenue_by_merchant(merchant.id)], merchant]
     end.sort.reverse
   end
 
