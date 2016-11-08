@@ -26,24 +26,28 @@ class MerchantAnalystTest < MiniTest::Test
   end
 
   def test_it_returns_merchants_list
-    assert_equal 4, sales_analyst.merchants_list.length
+    assert_equal 5, sales_analyst.merchants_list.length
   end
 
   def test_it_finds_average_items_per_merchant
-    assert_equal 2.75, sales_analyst.average_items_per_merchant
+    assert_equal 2.2, sales_analyst.average_items_per_merchant
   end
 
-  def test_it_finds_how_many_items_one_merchant_has
+  def test_it_finds_how_many_items_one_merchant_has_when_merchant_has_items
     assert_equal 2, sales_analyst.items_count(44434165)
+  end
+
+  def test_it_finds_how_many_items_one_merchant_has_when_merchant_has_zero_items
+    assert_equal 0, sales_analyst.items_count(99999999)
   end
 
   def test_it_makes_array_for_how_many_items_each_merchant_has
     result = sales_analyst.items_per_merchant_list
-    assert_equal [2, 6, 2, 1], result
+    assert_equal [2, 6, 2, 1, 0], result
   end
 
   def test_it_finds_average_items_per_merchant_standard_deviation
-    assert_equal 2.22, sales_analyst.average_items_per_merchant_standard_deviation
+    assert_equal 2.28, sales_analyst.average_items_per_merchant_standard_deviation
   end
 
   def test_it_lists_merchants_with_item_count_over_one_standard_devation
@@ -52,15 +56,20 @@ class MerchantAnalystTest < MiniTest::Test
     assert_equal 12334303, result.first.id
   end
 
-  def test_average_item_price_for_merchant
+  def test_average_item_price_for_merchant_when_merchant_has_items
     result = sales_analyst.average_item_price_for_merchant(12334303)
-    assert_equal 7.13, result.to_f 
+    assert_equal 7.13, result.to_f
+  end
+
+  def test_average_item_price_for_merchant_when_merchant_has_zero_items
+    result = sales_analyst.average_item_price_for_merchant(99999999)
+    assert_equal 0, result.to_f
   end
 
   def test_average_average_price_per_merchant
-    #Based on fixture files: [4.13, 7.13, 8.75]
+    #Based on fixture files: [4.13, 7.13, 8.75, 0]
     result = sales_analyst.average_average_price_per_merchant
-    assert_equal 7.37, result.to_f
+    assert_equal 5.89, result.to_f
   end
 
   def test_finds_total_revenue_of_merchant
@@ -95,7 +104,7 @@ class MerchantAnalystTest < MiniTest::Test
   def test_finds_top_revenue_earners
     actual = sales_analyst.top_revenue_earners(10)
     assert_equal Merchant, actual.first.class
-    assert_equal 4, actual.count
+    assert_equal 5, actual.count
   end
 
   def test_finds_merchants_with_pending_invoices
@@ -119,7 +128,7 @@ class MerchantAnalystTest < MiniTest::Test
   def test_merchants_ranked_by_revenue
     actual = sales_analyst.merchants_ranked_by_revenue
     assert_equal Merchant, actual.first.class
-    assert_equal 4, actual.count
+    assert_equal 5, actual.count
   end
 
 end

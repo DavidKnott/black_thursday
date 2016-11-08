@@ -1,3 +1,4 @@
+require 'pry'
 require_relative 'calculator'
 
 #Colection of methods used for Merchant related
@@ -59,7 +60,9 @@ module MerchantAnalyst
 
   def average_item_price_for_merchant(merchant_id)
     merchant = find_merchant(merchant_id)
-    rounding(list_average(items_unit_price_list(merchant.items)))
+    merchant_items = merchant.items
+    return rounding(0) if merchant_items.empty? 
+    rounding(list_average(items_unit_price_list(merchant_items)))
   end
 
   def average_average_price_per_merchant
@@ -145,8 +148,8 @@ module MerchantAnalyst
 
   def merchants_revenue
     merchants_list.map do |merchant|
-      [[revenue_by_merchant(merchant.id)], merchant]
-    end.sort.reverse
+      [revenue_by_merchant(merchant.id), merchant]
+    end.sort_by {|item| item.first}.reverse
   end
 
   def top_revenue_earners(top_list = 20)
