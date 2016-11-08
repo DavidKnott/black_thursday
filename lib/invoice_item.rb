@@ -29,7 +29,7 @@ class InvoiceItem
   end
 
   def unit_price_to_dollars
-    bigdecimal_to_float(unit_price)
+    simple_rounding(unit_price)
   end
 
 end
