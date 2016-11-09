@@ -1,11 +1,11 @@
 require_relative 'test_helper'
 require './lib/sales_engine'
 
-
 class SalesEngineTest < Minitest::Test
 
   attr_reader   :se,
-                :test_magic_file_list
+                :test_magic_file_list,
+                :one_test_file
 
   def setup
     test_file_list = {:merchants => "./data/merchants_fixture.csv",
@@ -19,7 +19,8 @@ class SalesEngineTest < Minitest::Test
                     :invoices => "./data/invoices_magic.csv",
                     :invoice_items => "./data/invoice_items_magic.csv",
                     :transactions => "./data/transactions_magic.csv",
-                    :customers => "./data/customers_magic.csv"}                    
+                    :customers => "./data/customers_magic.csv"}
+    @one_test_file = {:merchants => "./data/merchants_fixture.csv"}
     @se = SalesEngine.from_csv(test_file_list)
   end
 
@@ -27,6 +28,16 @@ class SalesEngineTest < Minitest::Test
     assert_raises "Please enter a valid file name" do
       SalesEngine.from_csv(test_magic_file_list)
     end
+  end
+
+  def test_updating_single_repository
+    test_object_id_before = se.object_id
+    test_merchants_repo_object_id_before = se.merchants.object_id
+    test_items_repo_object_id_before = se.items.object_id
+    se.from_csv(one_test_file)
+    assert_equal test_object_id_before, se.object_id
+    refute test_merchants_repo_object_id_before == se.merchants.object_id
+    assert_equal test_items_repo_object_id_before, se.items.object_id
   end
 
   def test_merchant_repository_exists

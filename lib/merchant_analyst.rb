@@ -1,4 +1,3 @@
-require 'pry'
 require_relative 'calculator'
 
 #Colection of methods used for Merchant related
