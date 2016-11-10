@@ -3,8 +3,6 @@ SimpleCov.start
 require 'minitest/autorun'
 require './lib/transaction'
 
-require 'pry'
-
 class TransactionTest < MiniTest::Test
 
   attr_reader     :transaction_info,
