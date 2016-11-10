@@ -1,4 +1,0 @@
-module CustomerAnalyst
-
-
-end

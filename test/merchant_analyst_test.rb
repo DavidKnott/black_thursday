@@ -67,7 +67,6 @@ class MerchantAnalystTest < MiniTest::Test
   end
 
   def test_average_average_price_per_merchant
-    #Based on fixture files: [4.13, 7.13, 8.75, 0]
     result = sales_analyst.average_average_price_per_merchant
     assert_equal 5.89, result.to_f
   end

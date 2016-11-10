@@ -9,41 +9,6 @@ class InvoiceRepositoryTest < Minitest::Test
     @test_invoice_repo = InvoiceRepository.new("./data/invoices_fixture.csv", "parent")
   end
   
-  def test_invoice_repo_calls_parent_for_merchant
-    parent = MiniTest::Mock.new
-    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
-    parent.expect(:find_merchant, nil, [26])
-    invoice_repo.find_merchant(26)
-    parent.verify
-  end
-
-  def test_invoice_repo_calls_parent_for_items
-    parent = MiniTest::Mock.new
-    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
-    parent.expect(:find_invoice_items, nil, [26])
-    invoice_repo.find_invoice_items(26)
-    parent.verify
-  end
-
-  def test_invoice_repo_calls_parent_for_transactions
-    parent = MiniTest::Mock.new
-    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
-    parent.expect(:find_transactions, nil, [26])
-    invoice_repo.find_transactions(26)
-    parent.verify
-  end
-
-  def test_invoice_repo_calls_parent_for_customers
-    parent = MiniTest::Mock.new
-    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
-    parent.expect(:find_customer, nil, [26])
-    invoice_repo.find_customer(26)
-    parent.verify
-  end
-
-
-
-#Testing using TEST FIXTURES
   def test_initialize_item_repository
     assert test_invoice_repo
   end
@@ -111,5 +76,38 @@ class InvoiceRepositoryTest < Minitest::Test
     result = test_invoice_repo.find_all_by_status(:notinrepository)
     assert_empty result
   end
+  
+  def test_invoice_repo_calls_parent_for_merchant
+    parent = MiniTest::Mock.new
+    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
+    parent.expect(:find_merchant, nil, [26])
+    invoice_repo.find_merchant(26)
+    parent.verify
+  end
+
+  def test_invoice_repo_calls_parent_for_items
+    parent = MiniTest::Mock.new
+    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
+    parent.expect(:find_invoice_items, nil, [26])
+    invoice_repo.find_invoice_items(26)
+    parent.verify
+  end
+
+  def test_invoice_repo_calls_parent_for_transactions
+    parent = MiniTest::Mock.new
+    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
+    parent.expect(:find_transactions, nil, [26])
+    invoice_repo.find_transactions(26)
+    parent.verify
+  end
+
+  def test_invoice_repo_calls_parent_for_customers
+    parent = MiniTest::Mock.new
+    invoice_repo = InvoiceRepository.new("./data/invoices_one.csv", parent)
+    parent.expect(:find_customer, nil, [26])
+    invoice_repo.find_customer(26)
+    parent.verify
+  end
+
 
 end

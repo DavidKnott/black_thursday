@@ -22,41 +22,34 @@ attr_reader     :id,
     @updated_at = Time.parse(invoice_info[:updated_at])
   end
 
-  #Can be tested through Mock
   def merchant
     parent.find_merchant(merchant_id)
   end
 
-  #Testing through INTEGRATION TEST
   def items
     invoice_items.map do |invoice_item|
       parent.find_item(invoice_item.item_id)
     end
   end
 
-  #Can be tested through Mock
   def invoice_items
     parent.find_invoice_items(id)
   end
 
-  #Can be tested through Mock
   def transactions
     parent.find_transactions(id)
   end
 
-  #Can be tested through Mock
   def customer
     parent.find_customer(customer_id)
   end
 
-  #Testing through INTEGRATION TEST
   def is_paid_in_full?
     transactions.any? do |transaction|
       transaction.result == "success"
     end
   end
 
-  #Testing through INTEGRATION TEST
   def total
     return 0 unless is_paid_in_full?
     invoice_items.reduce(0) do |invoice_total, invoice_item|
